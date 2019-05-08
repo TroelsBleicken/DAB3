@@ -14,8 +14,8 @@ namespace SocialNetwork.Models
         public string PostId { get; set; }
         public string Type { get; set; }
         public string Text { get; set; }
-        public string Owner { get; set; }
-        public string Circle { get; set; }
+        public string OwnerId { get; set; }
+        public string CircleId { get; set; }
         public DateTime CreationTime { get; set; }
         public string Details { get; set; }
         public List<Comment> Comments { get; set; }
