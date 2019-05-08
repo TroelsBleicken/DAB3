@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DAL;
+using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {
@@ -22,9 +23,10 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: User/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+
+            return View(_userRepository.GetUser(id));
         }
 
         // GET: User/Create
@@ -36,12 +38,11 @@ namespace SocialNetwork.Controllers
         // POST: User/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm]User user)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                _userRepository.CreateUser(user);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -51,7 +52,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: User/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
             return View();
         }
@@ -59,11 +60,11 @@ namespace SocialNetwork.Controllers
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(string id, [FromForm]User user)
         {
             try
             {
-                // TODO: Add update logic here
+                _userRepository.UpdateUser(user.UserId, user);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -74,7 +75,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
             return View();
         }
@@ -82,11 +83,11 @@ namespace SocialNetwork.Controllers
         // POST: User/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string id, [FromForm]User user)
         {
             try
             {
-                // TODO: Add delete logic here
+                _userRepository.RemoveUser(user);
 
                 return RedirectToAction(nameof(Index));
             }
