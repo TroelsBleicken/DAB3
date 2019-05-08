@@ -4,15 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.DAL;
 
 namespace SocialNetwork.Controllers
 {
     public class UserController : Controller
     {
+        UserRepository _userRepository;
+        public UserController(UserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            return View(_userRepository.GetUsers());
         }
 
         // GET: User/Details/5
