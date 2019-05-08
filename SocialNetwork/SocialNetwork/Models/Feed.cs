@@ -14,6 +14,6 @@ namespace SocialNetwork.Models
         public string FeedId { get; set; }
 
         public List<Post> Posts { get; set; }
-        public List<User> Users { get; set; }
+        public User User { get; set; }
     }
 }
