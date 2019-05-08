@@ -7,13 +7,12 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace SocialNetwork.Models
 {
-    public class Feed
+    public class Comment
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string FeedId { get; set; }
+        public string Commenter { get; set; }
+        public string Text { get; set; }
 
-        public List<Post> Posts { get; set; }
-        public User User { get; set; }
     }
 }
