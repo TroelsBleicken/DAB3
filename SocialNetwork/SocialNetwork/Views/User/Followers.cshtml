@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<SocialNetwork.Models.User>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Followers";
 }
 
-<h1>Index</h1>
+<h1>Followers</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -49,13 +49,9 @@
                 @Html.DisplayFor(modelItem => item.Location)
             </td>
             <td>
-
-                @Html.ActionLink("Edit", "Edit", "User", new { id = item.UserId }) |
-                @Html.ActionLink("Details", "Details", "User", new { id = item.UserId }) |
-                @Html.ActionLink("Delete", "Delete", "User", new { id = item.UserId }) |
-                @Html.ActionLink("Wall", "???", "Wall", new { id = item.UserId }) |
-                @Html.ActionLink("Feed", "???", "Feed", new { id = item.UserId }) |
-                @Html.ActionLink("Posts", "???", "Post", new { id = item.UserId })
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

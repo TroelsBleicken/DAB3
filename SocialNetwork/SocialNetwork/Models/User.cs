@@ -20,5 +20,20 @@ namespace SocialNetwork.Models
         public List<string> Following { get; set; }
         public List<string> Blocked { get; set; }
         public List<string> Circles { get; set; }
+
+        public User()
+        {
+            if (Followers == null)
+                Followers = new List<string>();
+            
+            if(Following == null)
+                Following = new List<string>();
+
+            if(Blocked == null)
+                Blocked = new List<string>();
+
+            if(Circles == null)
+                Circles = new List<string>();
+        }
     }
 }

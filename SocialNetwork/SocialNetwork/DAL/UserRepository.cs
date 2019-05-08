@@ -27,7 +27,6 @@ namespace SocialNetwork.DAL
         public List<User> GetUsers()
         {
             return _users.Find(user => true).ToList();
-
         }
 
         public User GetUser(string id)
@@ -43,7 +42,8 @@ namespace SocialNetwork.DAL
 
         public void UpdateUser(string id, User userIn)
         {
-            _users.ReplaceOne(user => userIn.UserId == id, userIn);
+            var filter = Builders<User>.Filter.Eq(u => u.UserId, id);
+            var result = _users.ReplaceOne(filter, userIn, new UpdateOptions{IsUpsert = true});
         }
 
         public void RemoveUser(User userIn)
@@ -63,6 +63,7 @@ namespace SocialNetwork.DAL
             user.Followers.Add(followerId);
 
             UpdateUser(user.UserId, user);
+
         }
 
         public void AddFollowing(string id, string followingId)

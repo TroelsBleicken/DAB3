@@ -9,6 +9,7 @@ using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {
+
     public class UserController : Controller
     {
         UserRepository _userRepository;
@@ -54,7 +55,7 @@ namespace SocialNetwork.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(string id)
         {
-            return View();
+            return View(_userRepository.GetUser(id));
         }
 
         // POST: User/Edit/5
@@ -77,8 +78,8 @@ namespace SocialNetwork.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(string id)
         {
-            
-            return View(_userRepository.GetUser(id));
+            var user = _userRepository.GetUser(id);
+            return View(user);
         }
 
         // POST: User/Delete/5
@@ -88,7 +89,7 @@ namespace SocialNetwork.Controllers
         {
             try
             {
-                _userRepository.RemoveUser(user);
+                _userRepository.RemoveUser(id);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -97,5 +98,57 @@ namespace SocialNetwork.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddFollower(string userId, string userToFollowId)
+        {
+            try
+            {
+                _userRepository.AddFollower(userId,userToFollowId);
+                _userRepository.AddFollowing(userToFollowId,userId);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddFollowing(string userId, string userToFollowingId)
+        {
+            try
+            {
+                _userRepository.AddFollowing(userId, userToFollowingId);
+                _userRepository.AddFollower(userToFollowingId, userId);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddBlocking(string userId, string userToBlockId)
+        {
+            try
+            {
+                _userRepository.AddBlocked(userId, userToBlockId);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+
     }
 }
