@@ -54,7 +54,7 @@ namespace SocialNetwork.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(string id)
         {
-            return View();
+            return View(_userRepository.GetUser(id));
         }
 
         // POST: User/Edit/5
@@ -88,7 +88,7 @@ namespace SocialNetwork.Controllers
         {
             try
             {
-                _userRepository.RemoveUser(user);
+                _userRepository.RemoveUser(id);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -97,5 +97,7 @@ namespace SocialNetwork.Controllers
                 return View();
             }
         }
+        
+        
     }
 }

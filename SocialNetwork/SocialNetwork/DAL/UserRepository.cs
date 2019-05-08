@@ -27,7 +27,6 @@ namespace SocialNetwork.DAL
         public List<User> GetUsers()
         {
             return _users.Find(user => true).ToList();
-
         }
 
         public User GetUser(string id)
