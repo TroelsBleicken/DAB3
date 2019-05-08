@@ -4,67 +4,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SocialNetwork.DAL;
-using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {
-    public class UserController : Controller
+    public class PostController : Controller
     {
-        UserRepository _userRepository;
-        public UserController(UserRepository userRepository)
-        {
-            _userRepository = userRepository;
-        }
-        // GET: User
+        // GET: Post
         public ActionResult Index()
         {
-            return View(_userRepository.GetUsers());
+            return View();
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(string id)
+        // GET: Post/Details/5
+        public ActionResult Details(int id)
         {
-
-            return View(_userRepository.GetUser(id));
+            return View();
         }
 
-        // GET: User/Create
+        // GET: Post/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Post/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([FromForm]User user)
+        public ActionResult Create(IFormCollection collection)
         {
             try
             {
-                _userRepository.CreateUser(user);
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: User/Edit/5
-        public ActionResult Edit(string id)
-        {
-            return View();
-        }
-
-        // POST: User/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, [FromForm]User user)
-        {
-            try
-            {
-                _userRepository.UpdateUser(user.UserId, user);
+                // TODO: Add insert logic here
 
                 return RedirectToAction(nameof(Index));
             }
@@ -74,20 +44,43 @@ namespace SocialNetwork.Controllers
             }
         }
 
-        // GET: User/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Post/Edit/5
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: User/Delete/5
+        // POST: Post/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, [FromForm]User user)
+        public ActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
-                _userRepository.RemoveUser(user);
+                // TODO: Add update logic here
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: Post/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: Post/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
 
                 return RedirectToAction(nameof(Index));
             }
