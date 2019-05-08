@@ -77,13 +77,14 @@ namespace SocialNetwork.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(string id)
         {
-            return View();
+            
+            return View(_userRepository.GetUser(id));
         }
 
         // POST: User/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, [FromForm]User user)
+        public ActionResult Delete(string id, User user)
         {
             try
             {

@@ -26,7 +26,8 @@ namespace SocialNetwork.DAL
         #region Interface implementation
         public List<User> GetUsers()
         {
-            return _users.Find(book => true).ToList();
+            return _users.Find(user => true).ToList();
+
         }
 
         public User GetUser(string id)
