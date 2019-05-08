@@ -7,10 +7,10 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace SocialNetwork.Models
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
     public class Comment
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Commenter { get; set; }
         public string Text { get; set; }
 
