@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,40 +10,41 @@ using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {
-    public class UserController : Controller
+    public class FeedController : Controller
     {
-        UserRepository _userRepository;
-        public UserController(UserRepository userRepository)
+        private FeedRepository _feedRepository;
+
+        public FeedController(FeedRepository f)
         {
-            _userRepository = userRepository;
+            _feedRepository = f;
         }
-        // GET: User
+        // GET: Feed
         public ActionResult Index()
         {
-            return View(_userRepository.GetUsers());
+            return View(_feedRepository.GetFeeds());
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(string id)
+        // GET: Feed/Details/5
+        public ActionResult Details(int id)
         {
-
-            return View(_userRepository.GetUser(id));
+            return View();
         }
+        
 
-        // GET: User/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Feed/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([FromForm]User user)
+        public ActionResult Create([FromForm] Feed f)
         {
             try
             {
-                _userRepository.CreateUser(user);
+                _feedRepository.InsertFeed(f);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -51,20 +53,20 @@ namespace SocialNetwork.Controllers
             }
         }
 
-        // GET: User/Edit/5
-        public ActionResult Edit(string id)
+        // GET: Feed/Edit/5
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: User/Edit/5
+        // POST: Feed/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, [FromForm]User user)
+        public ActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
-                _userRepository.UpdateUser(user.UserId, user);
+                // TODO: Add update logic here
 
                 return RedirectToAction(nameof(Index));
             }
@@ -74,21 +76,20 @@ namespace SocialNetwork.Controllers
             }
         }
 
-        // GET: User/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Feed/Delete/5
+        public ActionResult Delete(int id)
         {
-            
-            return View(_userRepository.GetUser(id));
+            return View();
         }
 
-        // POST: User/Delete/5
+        // POST: Feed/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(string id, User user)
+        public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
-                _userRepository.RemoveUser(user);
+                // TODO: Add delete logic here
 
                 return RedirectToAction(nameof(Index));
             }
