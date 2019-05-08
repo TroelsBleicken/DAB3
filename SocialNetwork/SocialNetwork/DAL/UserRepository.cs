@@ -16,6 +16,10 @@ namespace SocialNetwork.DAL
         {
             var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));
             var database = client.GetDatabase("SocialNetworkDb");
+
+            if (!MongoDbHelpFunctions.CollectionExists(database, "Users"))
+                database.CreateCollection("Users");
+
             _users = database.GetCollection<User>("Users");
         }
 
