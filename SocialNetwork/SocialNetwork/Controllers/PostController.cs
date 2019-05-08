@@ -4,11 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.DAL;
 
 namespace SocialNetwork.Controllers
 {
     public class PostController : Controller
     {
+        PostRepository _postRepository;
+        public PostController(PostRepository postRepository)
+        {
+            _postRepository = postRepository;
+        }
         // GET: Post
         public ActionResult Index()
         {
@@ -16,9 +22,9 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: Post/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            return View(_postRepository.GetPost(id));
         }
 
         // GET: Post/Create
