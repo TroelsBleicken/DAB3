@@ -3,10 +3,26 @@
 }
 
 <body>
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <div>To the greatest social network for beer lovers</div>
-    </div>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <div>To the greatest social network for beer lovers</div>
+</div>
+<div align="center" id="search">
+    <form asp-controller="Home">
+        <p>
+            <div class="dropdown">
+                <button class="dropbtn">Search for</button>
+                <div class="dropdown-content">
+                    <a value="Feeds">Feeds</a>
+                    <a value="Users">Users</a>
+                    <a value="Circles">Circles</a>
+                </div>
+            </div> 
+            Search: <input type="text" name="SearchString" class="rounded"/>
+            <input type="submit" value="Go" class="rounded" />
+        </p>
+    </form>
+</div>
 </body>
 
 
