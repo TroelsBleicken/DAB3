@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 using SocialNetwork.Models;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace SocialNetwork.DAL
     {
         private readonly IMongoCollection<User> _users;
 
-        public UserRepository()
+        public UserRepository(IConfiguration config)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
+            var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));
             var database = client.GetDatabase("SocialNetworkDb");
             _users = database.GetCollection<User>("Users");
         }
