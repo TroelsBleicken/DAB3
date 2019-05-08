@@ -1,18 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SocialNetwork.DAL;
+using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {
     public class FeedController : Controller
     {
+        private FeedRepository _feedRepository;
+
+        public FeedController(FeedRepository f)
+        {
+            _feedRepository = f;
+        }
         // GET: Feed
         public ActionResult Index()
         {
-            return View();
+            return View(_feedRepository.GetFeeds());
         }
 
         // GET: Feed/Details/5
@@ -20,8 +29,8 @@ namespace SocialNetwork.Controllers
         {
             return View();
         }
+        
 
-        // GET: Feed/Create
         public ActionResult Create()
         {
             return View();
@@ -30,11 +39,11 @@ namespace SocialNetwork.Controllers
         // POST: Feed/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm] Feed f)
         {
             try
             {
-                // TODO: Add insert logic here
+                _feedRepository.InsertFeed(f);
 
                 return RedirectToAction(nameof(Index));
             }
