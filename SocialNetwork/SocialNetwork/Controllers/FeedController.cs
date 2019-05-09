@@ -77,19 +77,20 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: Feed/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            var feed = _feedRepository.GetFeedById(id);
+            return View(feed);
         }
 
         // POST: Feed/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Feed f)
         {
             try
             {
-                // TODO: Add delete logic here
+                _feedRepository.RemoveFeed(f);
 
                 return RedirectToAction(nameof(Index));
             }

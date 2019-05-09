@@ -28,6 +28,10 @@ namespace SocialNetwork.DAL
             return _feeds.Find<Feed>(f => true).ToList();
         }
 
+        public void RemoveFeedById(string id)
+        {
+            _feeds.DeleteOne(f => f.FeedId == id);
+        }
         public Feed GetFeedById(string id)
         {
             return _feeds.Find(f => f.FeedId == id).FirstOrDefault();
