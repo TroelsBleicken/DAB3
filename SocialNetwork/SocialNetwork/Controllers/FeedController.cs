@@ -25,9 +25,10 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: Feed/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            var feed = _feedRepository.GetFeedById(id);
+            return View(feed);
         }
         
 
@@ -86,11 +87,11 @@ namespace SocialNetwork.Controllers
         // POST: Feed/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Feed f)
+        public ActionResult Delete(string id, Feed f)
         {
             try
             {
-                _feedRepository.RemoveFeed(f);
+                _feedRepository.RemoveFeedById(id);
 
                 return RedirectToAction(nameof(Index));
             }
