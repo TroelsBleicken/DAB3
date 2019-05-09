@@ -39,7 +39,8 @@ namespace SocialNetwork.Controllers
         public ActionResult Details(string id)
         {
             var feed = _feedRepository.GetFeedById(id);
-            return View(feed);
+
+            return feed != null ? View(feed) : View(_feedRepository.GetFeedByUserId(id));
         }
         
 

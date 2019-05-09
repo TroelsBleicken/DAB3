@@ -60,6 +60,10 @@ namespace SocialNetwork.DAL
             };
             _feeds.InsertOne(f);
         }
-        
+
+        public Feed GetFeedByUserId(string id)
+        {
+            return _feeds.Find(f => f.User.UserId == id).FirstOrDefault();
+        }
     }
 }
