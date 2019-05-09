@@ -30,7 +30,23 @@
         {
             foreach (var post in Model.Posts)
             {
-                <h4>@post.Text</h4>
+                <div class="comment">
+                    <h5>@post.OwnerId</h5>
+                    @post.Text
+                    <br/>
+                    Comments:
+                    @{
+                        if (post.Comments != null)
+                        {
+                            foreach (var comment in post.Comments)
+                            {
+                                <div>@comment.Text</div>
+                            }
+                        }
+                        
+                    }
+                    <br/><br/><br/>
+                </div>
             }
         }
     }
