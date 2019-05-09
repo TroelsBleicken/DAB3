@@ -40,7 +40,24 @@ namespace SocialNetwork.Controllers
         {
             var feed = _feedRepository.GetFeedById(id);
 
-            return feed != null ? View(feed) : View(_feedRepository.GetFeedByUserId(id));
+            if (feed != null)
+                return View(feed);
+            else
+            {
+                feed = _feedRepository.GetFeedByUserId(id);
+                if (feed != null)
+                    return View(feed);
+                else
+                {
+                    feed = new Feed
+                    {
+                        Posts = new List<string>(),
+                        User = id
+                    };
+                    _feedRepository.InsertFeed(feed);
+                    return View(feed);
+                }
+            }
         }
         
 

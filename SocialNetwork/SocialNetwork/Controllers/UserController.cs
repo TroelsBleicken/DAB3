@@ -46,7 +46,7 @@ namespace SocialNetwork.Controllers
             try
             {
                 _userRepository.CreateUser(user);
-                _feedRepository.InsertFeedFromUser(user);
+                _feedRepository.InsertFeedFromUser(user.UserId);
                 return RedirectToAction(nameof(Index));
             }
             catch

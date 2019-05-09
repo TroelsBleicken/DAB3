@@ -17,7 +17,7 @@
                 @Html.DisplayNameFor(model => model.FeedId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User.Name)
+                @Html.DisplayNameFor(model => model.User)
             </th>
             <th>
                 # of posts
@@ -32,7 +32,7 @@
             @Html.DisplayFor(modelItem => item.FeedId)
         </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Name)
+                @Html.DisplayFor(modelItem => item.User)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Posts.Count)
