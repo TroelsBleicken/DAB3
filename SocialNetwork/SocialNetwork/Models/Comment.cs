@@ -9,9 +9,13 @@ namespace SocialNetwork.Models
 {
     public class Comment
     {
+        public Comment(string commenterId, string comment)
+        {
+
+        }
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Commenter { get; set; }
+        public string CommenterId { get; set; }
         public string Text { get; set; }
 
     }

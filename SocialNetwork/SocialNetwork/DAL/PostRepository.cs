@@ -19,7 +19,8 @@ namespace SocialNetwork.DAL
 
             if (!MongoDbHelpFunctions.CollectionExists(database, "Posts"))
                 database.CreateCollection("Posts");
-            _posts = database.GetCollection<Post>("Users");
+
+            _posts = database.GetCollection<Post>("Posts");
         }
 
         public Post GetPost(string id)
@@ -35,6 +36,31 @@ namespace SocialNetwork.DAL
         public List<Post> GetPostsByUserCircle(string id)
         {
             return _posts.Find(post => post.CircleId == id).ToList();
+        }
+
+        public Post CreatePost(Post post)
+        {
+            _posts.InsertOne(post);
+            return post;
+        }
+
+        public void UpdatePost(string id, Post postIn)
+        {
+            var filter = Builders<Post>.Filter.Eq(p => p.PostId, id);
+            var result = _posts.ReplaceOne(filter, postIn, new UpdateOptions{IsUpsert = true});
+        }
+        
+        public void RemovePost(string id)
+        {
+            _posts.DeleteOne(p => p.PostId == id);
+        }
+
+        public void AddComment(string postId, string userId ,string comment)
+        {
+            var post = GetPost(postId);
+            var cmnt = new Comment(userId, comment); 
+            post.Comments.Add(cmnt);
+            UpdatePost(post.PostId, post);
         }
     }
 }
