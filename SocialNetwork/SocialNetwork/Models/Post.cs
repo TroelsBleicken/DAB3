@@ -17,7 +17,13 @@ namespace SocialNetwork.Models
         public string OwnerId { get; set; }
         public string CircleId { get; set; }
         public DateTime CreationTime { get; set; }
-        public string Details { get; set; }
+        public Detail Details { get; set; }
         public List<Comment> Comments { get; set; }
+
+        public Post()
+        {
+            if(Comments == null)
+                Comments = new List<Comment>();
+        }
     }
 }
