@@ -24,30 +24,13 @@
     <a asp-action="Index">Back to List</a>
 </div>
 <div>
-    <h3>Posts on @Model.User.Name's feed</h3>
+    <h3>Posts on feed</h3>
     @{
-        if (Model.Posts != null)
+        int i = 1;
+        foreach (var post in Model.Posts)
         {
-            foreach (var post in Model.Posts)
-            {
-                <div class="comment">
-                    <h5>@post.OwnerId</h5>
-                    @post.Text
-                    <br/>
-                    Comments:
-                    @{
-                        if (post.Comments != null)
-                        {
-                            foreach (var comment in post.Comments)
-                            {
-                                <div>@comment.Text</div>
-                            }
-                        }
-                        
-                    }
-                    <br/><br/><br/>
-                </div>
-            }
+    <div>@post @Html.ActionLink("Edit", "Details", "Post", new { id = post })</div> 
         }
     }
+  
 </div>

@@ -47,23 +47,24 @@ namespace SocialNetwork.DAL
             _feeds.DeleteOne(f => f.FeedId == remove.FeedId);
         }
 
-        public void AddPost(string feedId, Post insert)
+        public void AddPost(string feedId, string insert)
         {
             _feeds.Find(f => f.FeedId == feedId).FirstOrDefault().Posts.Add(insert);
         }
 
-        public void InsertFeedFromUser(User user)
+        public void InsertFeedFromUser(string user)
         {
             Feed f = new Feed
             {
-                User = user
+                User = user,
+                Posts = new List<string>()
             };
             _feeds.InsertOne(f);
         }
 
         public Feed GetFeedByUserId(string id)
         {
-            return _feeds.Find(f => f.User.UserId == id).FirstOrDefault();
+            return _feeds.Find(f => f.User == id).FirstOrDefault();
         }
     }
 }
