@@ -23,6 +23,11 @@ namespace SocialNetwork.DAL
             _posts = database.GetCollection<Post>("Posts");
         }
 
+        public List<Post> GetPosts()
+        {
+            return _posts.Find(post => true).ToList();
+        }
+
         public Post GetPost(string id)
         {
             return _posts.Find<Post>(post => post.PostId == id).FirstOrDefault();

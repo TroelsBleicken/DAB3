@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DAL;
+using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {
@@ -18,7 +19,7 @@ namespace SocialNetwork.Controllers
         // GET: Post
         public ActionResult Index()
         {
-            return View();
+            return View(_postRepository.GetPosts());
         }
 
         // GET: Post/Details/5
@@ -36,12 +37,11 @@ namespace SocialNetwork.Controllers
         // POST: Post/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm]Post post, string text)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                _postRepository.CreatePost(post);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -51,19 +51,19 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: Post/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            return View(_postRepository.GetPost(id));
         }
 
         // POST: Post/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(string id, [FromForm]Post post)
         {
             try
             {
-                // TODO: Add update logic here
+                _postRepository.UpdatePost(id, post);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -74,25 +74,42 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: Post/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            var post = _postRepository.GetPost(id);
+            return View(post);
         }
 
         // POST: Post/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string id, Post post)
         {
             try
             {
-                // TODO: Add delete logic here
+                _postRepository.RemovePost(id);
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return View();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddComment(string postId,string userId, string comment)
+        {
+            try
+            {
+                _postRepository.AddComment(postId,userId,comment);
+
+                return RedirectToAction(nameof(Details));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
             }
         }
     }
