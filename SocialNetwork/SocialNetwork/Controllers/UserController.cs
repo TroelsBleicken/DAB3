@@ -13,9 +13,11 @@ namespace SocialNetwork.Controllers
     public class UserController : Controller
     {
         UserRepository _userRepository;
-        public UserController(UserRepository userRepository)
+        private FeedRepository _feedRepository;
+        public UserController(UserRepository userRepository, FeedRepository feedRepository)
         {
             _userRepository = userRepository;
+            _feedRepository = feedRepository;
         }
         // GET: User
         public ActionResult Index()
@@ -44,6 +46,7 @@ namespace SocialNetwork.Controllers
             try
             {
                 _userRepository.CreateUser(user);
+                _feedRepository.InsertFeedFromUser(user);
                 return RedirectToAction(nameof(Index));
             }
             catch

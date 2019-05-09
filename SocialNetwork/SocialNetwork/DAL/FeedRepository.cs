@@ -51,6 +51,15 @@ namespace SocialNetwork.DAL
         {
             _feeds.Find(f => f.FeedId == feedId).FirstOrDefault().Posts.Add(insert);
         }
+
+        public void InsertFeedFromUser(User user)
+        {
+            Feed f = new Feed
+            {
+                User = user
+            };
+            _feeds.InsertOne(f);
+        }
         
     }
 }

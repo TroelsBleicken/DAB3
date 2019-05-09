@@ -16,19 +16,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.FeedId)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.Name)
+            </th>
+            <th>
+                # of posts
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FeedId)
+        </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FeedId)
+                @Html.DisplayFor(modelItem => item.User.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.Posts.Count)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit","Feed", new {id = item.FeedId}) |
+                @Html.ActionLink("Details", "Details", new { id = item.FeedId }) |
+                @Html.ActionLink("Delete", "Delete", "Feed", new {id = item.FeedId})|
+                @Html.ActionLink("Add post", "Create", "Post", new {id = item.FeedId})
             </td>
         </tr>
 }
