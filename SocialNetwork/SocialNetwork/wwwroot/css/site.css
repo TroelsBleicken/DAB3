@@ -76,6 +76,14 @@ body {
     border: none;
 }
 
+.comment {
+    width: 25%;
+    text-align: center;
+    margin: auto;
+    background-color: wheat;
+    font-family: fantasy;
+}
+
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
     position: relative;
