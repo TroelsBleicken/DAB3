@@ -37,10 +37,11 @@ namespace SocialNetwork.Controllers
         // POST: Post/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([FromForm]Post post, string text)
+        public ActionResult Create([FromForm]Post post, string id)
         {
             try
             {
+                post.OwnerId = id;
                 _postRepository.CreatePost(post);
                 return RedirectToAction(nameof(Index));
             }
