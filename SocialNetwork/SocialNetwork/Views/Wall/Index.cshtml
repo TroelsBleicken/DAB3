@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SocialNetwork.Models.Wall>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.WallId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Circle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.WallId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Circle)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit",  "Wall", new {id = item.WallId }) |
+                @Html.ActionLink("Details", "Details", "Wall", new { id = item.WallId}) |
+                @Html.ActionLink("Delete", "Delete", "Wall", new { id = item.WallId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -17,17 +17,7 @@ namespace SocialNetwork.Controllers
         public FeedController(FeedRepository f)
         {
             _feedRepository = f;
-            //var feed = _feedRepository.GetFeedById("5cd408a0594e092e04a3369a");
-            //feed.Posts = new List<Post>();
-            //feed.Posts.Add(new Post
-            //{
-            //    Text = "Her en en post"
-            //});
-            //feed.Posts.Add(new Post
-            //{
-            //    Text = "Og endnu en"
-            //});
-            //_feedRepository.UpdateFeed(feed);
+          
         }
         // GET: Feed
         public ActionResult Index()
@@ -42,22 +32,16 @@ namespace SocialNetwork.Controllers
 
             if (feed != null)
                 return View(feed);
-            else
+            feed = _feedRepository.GetFeedByUserId(id);
+            if (feed != null)
+                return View(feed);
+            feed = new Feed
             {
-                feed = _feedRepository.GetFeedByUserId(id);
-                if (feed != null)
-                    return View(feed);
-                else
-                {
-                    feed = new Feed
-                    {
-                        Posts = new List<string>(),
-                        User = id
-                    };
-                    _feedRepository.InsertFeed(feed);
-                    return View(feed);
-                }
-            }
+                Posts = new List<string>(),
+                User = id
+            };
+            _feedRepository.InsertFeed(feed);
+            return View(feed);
         }
         
 

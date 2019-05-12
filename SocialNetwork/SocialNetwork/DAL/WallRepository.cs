@@ -55,5 +55,10 @@ namespace SocialNetwork.DAL
         {
             _walls.DeleteOne(w => w.WallId == id);
         }
+
+        public Wall GetWallByUserId(string id)
+        {
+           return _walls.Find(w => w.User == id).FirstOrDefault();
+        }
     }
 }

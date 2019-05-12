@@ -14,10 +14,12 @@ namespace SocialNetwork.Controllers
     {
         UserRepository _userRepository;
         private FeedRepository _feedRepository;
-        public UserController(UserRepository userRepository, FeedRepository feedRepository)
+        private WallRepository _wallRepository;
+        public UserController(UserRepository userRepository, FeedRepository feedRepository, WallRepository wallRepository)
         {
             _userRepository = userRepository;
             _feedRepository = feedRepository;
+            _wallRepository = wallRepository;
         }
         // GET: User
         public ActionResult Index()
@@ -47,6 +49,7 @@ namespace SocialNetwork.Controllers
             {
                 _userRepository.CreateUser(user);
                 _feedRepository.InsertFeedFromUser(user.UserId);
+                _wallRepository.AddWall(new Wall{User = user.UserId});
                 return RedirectToAction(nameof(Index));
             }
             catch
