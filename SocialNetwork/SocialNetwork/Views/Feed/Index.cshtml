@@ -1,4 +1,6 @@
-﻿@model IEnumerable<SocialNetwork.Models.Feed>
+﻿@using Microsoft.Extensions.Configuration
+@using SocialNetwork.DAL
+@model IEnumerable<SocialNetwork.Models.Feed>
 
 @{
     ViewData["Title"] = "Index";
@@ -39,7 +41,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit","Feed", new {id = item.FeedId}) |
-                @Html.ActionLink("Details", "Details", new { id = item.FeedId }) |
+                @Html.ActionLink("Details", "Details", "Feed", new { id = item.FeedId }) |
                 @Html.ActionLink("Delete", "Delete", "Feed", new {id = item.FeedId})|
                 @Html.ActionLink("Add post", "Create", "Post", new {id = item.FeedId})
             </td>

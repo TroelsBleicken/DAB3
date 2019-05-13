@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using SocialNetwork.Models;
 
@@ -11,10 +12,14 @@ namespace SocialNetwork.DAL
     {
         private readonly IMongoCollection<Circle> _circles;
 
-        public CircleRepository()
+        public CircleRepository(IConfiguration config)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
+            var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));
             var database = client.GetDatabase("SocialNetworkDb");
+
+            if(!MongoDbHelpFunctions.CollectionExists(database, "Circles"))
+                database.CreateCollection("Circles");
+
             _circles = database.GetCollection<Circle>("Circles");
         }
 
