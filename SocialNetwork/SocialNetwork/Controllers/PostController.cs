@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DAL;
 using SocialNetwork.Models;
 
@@ -113,5 +108,6 @@ namespace SocialNetwork.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        
     }
 }

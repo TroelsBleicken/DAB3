@@ -13,10 +13,12 @@ namespace SocialNetwork.Controllers
     {
         // GET: Wall
         private WallRepository _wallRepository;
+        private FeedRepository _feedRepository;
 
-        public WallController(WallRepository wallRepository)
+        public WallController(WallRepository wallRepository, FeedRepository feedRepository)
         {
             _wallRepository = wallRepository;
+            _feedRepository = feedRepository;
         }
         public ActionResult Index()
         {
@@ -106,6 +108,26 @@ namespace SocialNetwork.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult AddPost(string postId, string WallId)
+        {
+            try
+            {
+                var wall = _wallRepository.GetWallById(WallId);
+                if(wall.Posts == null)
+                    wall.Posts = new List<string>();
+                wall.Posts.Add(postId);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            
+            
+
         }
     }
 }

@@ -116,6 +116,10 @@ namespace SocialNetwork.Controllers
 
                 circle.Users.Add(UserId);
                 _circleRepository.UpdateCircle(circle);
+                var user = _userRepository.GetUser(UserId);
+                user.Circles.Add(CircleName);
+
+                _userRepository.UpdateUser(user.UserId, user);
                 return RedirectToAction(nameof(Index));
             }
             catch

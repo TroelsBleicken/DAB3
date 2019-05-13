@@ -44,19 +44,67 @@
     </dl>
 </div>
 
-<h3>Following you:</h3>
-@if (Model.Followers != null)
-{
-    foreach (var item in Model.Followers)
-    {
 
-
-        @Html.DisplayFor(modelItem => item)<br/>
-
-
+<ul style="width: 20%; float:left">
+    <h3>Followers:</h3>
+    @{
+        if (Model.Followers != null)
+        {
+            foreach (var follower in Model.Followers)
+            {
+                <li>@follower</li>
+            }
+        }
     }
-}
+</ul>
 
+<ul style="width: 20%; float: left">
+    <h3>Circles:</h3>
+    @{
+        if (Model.Circles != null)
+        {
+            foreach (var circle in Model.Circles)
+            {
+                <li>@circle</li>
+            }
+        }
+    }
+</ul>
+
+<ul style="width: 20%;float:left">
+    <h3>You follow:</h3>
+    @{
+        if (Model.Following != null)
+        {
+            foreach (var follow in Model.Following)
+            {
+                <li>@follow</li>
+            }
+        }
+    }
+</ul>
+
+<ul style="width: 20%; float: left">
+    <h3>Blocked:</h3>
+    @{
+        if (Model.Blocked != null)
+        {
+            foreach (var block in Model.Blocked)
+            {
+                <li>@block</li>
+            }
+        }
+    }
+</ul>
+
+
+<br/>
+<br />
+<br />
+<br />
+<br />
+
+<h5>Add a follower:</h5>
 <form asp-controller="User" asp-action="AddFollower">
     <input type="hidden" asp-for="UserId" value="@Model.UserId">
     <label>UserId of person who you want to follow you: </label>
@@ -64,19 +112,8 @@
     <input type="submit" />
 </form>
 
-<h3>You follow:</h3>
-@if (Model.Following != null)
-{
-    foreach (var item in Model.Following)
-    {
 
-
-        @Html.DisplayFor(modelItem => item)<br/>
-        
-
-
-    }
-}
+<h5>Follow a user:</h5>
 <form asp-controller="User" asp-action="AddFollowing">
     <input type="hidden" asp-for="UserId" value="@Model.UserId">
     <label>UserId of person you want to follow: </label>
@@ -84,29 +121,19 @@
     <input type="submit" />
 </form>
 
-<h3>You block:</h3>
-@if (Model.Blocked != null)
-{
-    foreach (var item in Model.Blocked)
-    {
-
-        @Html.DisplayFor(modelItem => item)<br/>
-
-    }
-}
+<h5>Block a user:</h5>
 <form asp-controller="User" asp-action="AddBlocking">
     <input type="hidden" asp-for="UserId" value="@Model.UserId">
     <label>UserId of person you want to block: </label>
     <input type="text" id="userToBlockId" name="userToBlockId" />
     <input type="submit" />
 </form>
-
-<h3>Add user to circle:</h3>
+<h5>Join a circle:</h5>
 <form asp-controller="Circle" asp-action="AddUser">
-    <input type="hidden" asp-for="UserId" value="@Model.UserId"/>
+    <input type="hidden" asp-for="UserId" value="@Model.UserId" />
     <label>Name of the circle, you want to follow</label>
-    <input type="text" id="CircleName" name="CircleName"/>
-    <input type="submit"/>
+    <input type="text" id="CircleName" name="CircleName" />
+    <input type="submit" />
 </form>
 
 <div>

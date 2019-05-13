@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DAL;
 using SocialNetwork.Models;
@@ -13,16 +8,18 @@ namespace SocialNetwork.Controllers
     public class FeedController : Controller
     {
         private FeedRepository _feedRepository;
+        private UserRepository _userRepository;
 
-        public FeedController(FeedRepository f)
+        public FeedController(FeedRepository f, UserRepository u)
         {
             _feedRepository = f;
-          
+            _userRepository = u;
         }
         // GET: Feed
         public ActionResult Index()
         {
-            return View(_feedRepository.GetFeeds());
+            var feeds = _feedRepository.GetFeeds();
+            return View(feeds);
         }
 
         // GET: Feed/Details/5

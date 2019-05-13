@@ -27,6 +27,11 @@ namespace SocialNetwork.DAL
             _feeds.InsertOne(newFeed);
         }
 
+        public List<Feed> GetFeedsByUserId(string id)
+        {
+            return _feeds.Find(f => true).ToList();
+        }
+
         public List<Feed> GetFeeds()
         {
             return _feeds.Find<Feed>(f => true).ToList();
