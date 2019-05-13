@@ -140,7 +140,7 @@ namespace SocialNetwork.Controllers
                     return View();
                 else
                 {
-                    return Details(userId);
+                    return RedirectToAction(nameof(Details), new {id = userId});
                 }
             }
             catch
