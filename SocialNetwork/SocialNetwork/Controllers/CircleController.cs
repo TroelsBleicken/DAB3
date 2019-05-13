@@ -13,9 +13,11 @@ namespace SocialNetwork.Controllers
     {
         // GET: Circle
         private CircleRepository _circleRepository;
-        public CircleController(CircleRepository circleRepository)
+        private UserRepository _userRepository;
+        public CircleController(CircleRepository circleRepository, UserRepository userRepository) 
         {
             _circleRepository = circleRepository;
+            _userRepository = userRepository;
         }
         public ActionResult Index()
         {
@@ -25,7 +27,17 @@ namespace SocialNetwork.Controllers
         // GET: Circle/Details/5
         public ActionResult Details(string id)
         {
-            return View(_circleRepository.GetCircleById(id));
+
+            var circle = _circleRepository.GetCircleById(id);
+            var list = new List<string>();
+            foreach (var userId in circle.Users)
+            {
+                list.Add(_userRepository.GetUser(userId).Name);
+            }
+
+            ViewData["Message"] = list;
+            
+            return View(circle);
         }
 
         // GET: Circle/Create
@@ -93,5 +105,25 @@ namespace SocialNetwork.Controllers
                 return View();
             }
         }
+
+        public ActionResult AddUser(string UserId, string CircleName)
+        {
+            try
+            {
+                var circle = _circleRepository.GetCircleByName(CircleName);
+                if(circle.Users == null)
+                    circle.Users = new List<string>();
+
+                circle.Users.Add(UserId);
+                _circleRepository.UpdateCircle(circle);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            
+        }
+
     }
 }

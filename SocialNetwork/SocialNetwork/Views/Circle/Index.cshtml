@@ -34,7 +34,8 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", "Circle", new { id = item.CircleId }) |
                 @Html.ActionLink("Details", "Details", "Circle", new { id = item.CircleId}) |
-                @Html.ActionLink("Delete", "Delete", "Circle", new { id = item.CircleId })
+                @Html.ActionLink("Delete", "Delete", "Circle", new { id = item.CircleId })|
+                @Html.ActionLink("Add user to circle", "AddUser", "Circle", new{id = item.CircleId})
             </td>
         </tr>
 }

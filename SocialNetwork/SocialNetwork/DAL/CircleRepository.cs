@@ -35,6 +35,7 @@ namespace SocialNetwork.DAL
 
         public void InsertCircle(Circle circle)
         {
+            circle.Users = new List<string>();
             _circles.InsertOne(circle);
         }
 

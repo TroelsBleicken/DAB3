@@ -26,6 +26,16 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <h2>Users:</h2>
+    @{
+        var users = ViewData["Message"] as List<string>;
+        foreach (var user in users)
+        {
+            <h6>@user</h6>
+        }
+    }
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.CircleId}) |
     <a asp-action="Index">Back to List</a>
 </div>

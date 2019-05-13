@@ -11,6 +11,6 @@ namespace SocialNetwork.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string CircleId { get; set; }
         public string Name { get; set; }
-        public List<User> Users { get; set; }
+        public List<string> Users { get; set; }
     }
 }

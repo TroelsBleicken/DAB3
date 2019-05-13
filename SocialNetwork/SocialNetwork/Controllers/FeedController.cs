@@ -76,11 +76,11 @@ namespace SocialNetwork.Controllers
         // POST: Feed/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Feed feed)
         {
             try
             {
-                // TODO: Add update logic here
+                _feedRepository.UpdateFeed(feed);
 
                 return RedirectToAction(nameof(Index));
             }
