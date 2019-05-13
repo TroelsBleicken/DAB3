@@ -14,11 +14,13 @@ namespace SocialNetwork.Controllers
         // GET: Wall
         private WallRepository _wallRepository;
         private FeedRepository _feedRepository;
+        private UserRepository _userRepository;
 
-        public WallController(WallRepository wallRepository, FeedRepository feedRepository)
+        public WallController(WallRepository wallRepository, FeedRepository feedRepository, UserRepository userRepository)
         {
             _wallRepository = wallRepository;
             _feedRepository = feedRepository;
+            _userRepository = userRepository;
         }
         public ActionResult Index()
         {
@@ -126,8 +128,25 @@ namespace SocialNetwork.Controllers
                 return RedirectToAction(nameof(Index));
             }
             
-            
+        }
 
+        public ActionResult DetailsFromUser(string viewerId,string userId)
+        {
+            var user = _userRepository.GetUser(userId);
+
+            try
+            {
+                if (user.Blocked.Contains(viewerId))
+                    return View();
+                else
+                {
+                    return Details(userId);
+                }
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

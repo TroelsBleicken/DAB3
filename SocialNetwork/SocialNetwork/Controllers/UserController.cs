@@ -1,8 +1,5 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DAL;
 using SocialNetwork.Models;
@@ -24,13 +21,14 @@ namespace SocialNetwork.Controllers
         // GET: User
         public ActionResult Index()
         {
-            return View(_userRepository.GetUsers());
+            IList<User> users = _userRepository.GetUsers();
+            return View(users);
         }
 
         // GET: User/Details/5
         public ActionResult Details(string id)
         {
-
+            ViewData["userlist"] = _userRepository.GetUsers();
             return View(_userRepository.GetUser(id));
         }
 

@@ -117,6 +117,9 @@ namespace SocialNetwork.Controllers
                 circle.Users.Add(UserId);
                 _circleRepository.UpdateCircle(circle);
                 var user = _userRepository.GetUser(UserId);
+                if(user.Circles == null)
+                    user.Circles = new List<string>();
+
                 user.Circles.Add(CircleName);
 
                 _userRepository.UpdateUser(user.UserId, user);

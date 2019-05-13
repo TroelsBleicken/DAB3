@@ -104,6 +104,8 @@
 <br />
 <br />
 
+
+
 <h5>Add a follower:</h5>
 <form asp-controller="User" asp-action="AddFollower">
     <input type="hidden" asp-for="UserId" value="@Model.UserId">
@@ -135,6 +137,26 @@
     <input type="text" id="CircleName" name="CircleName" />
     <input type="submit" />
 </form>
+
+
+<div>
+    @Html.ActionLink("Feed", "Details", "Feed", new {id = Model.UserId}) |
+    @Html.ActionLink("Wall", "Details", "Wall", new {id = Model.UserId})
+</div>
+<ul>
+
+
+    @{
+        var list = ViewData["userlist"] as List<User>;
+        
+        foreach (var user in list)
+        {
+            <li>
+                @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new { viewerId = Model.UserId, userId = user.UserId})
+            </li>
+        }
+    }
+</ul>
 
 <div>
     @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
