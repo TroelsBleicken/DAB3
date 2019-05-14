@@ -149,7 +149,7 @@
 
     @{
         var list = ViewData["userlist"] as List<User>;
-        ViewData.Clear();
+        
         foreach (var user in list)
         {
             <li>
@@ -165,6 +165,6 @@
 </div>
 <div style="width: 40%; float: left">
     @await Html.PartialAsync("~/Views/Wall/Details.cshtml", 
-        ViewData["wall"] as Wall)
+        ViewData["wall"])
 </div>
 
