@@ -6,160 +6,168 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Welcome, @Model.Name</h1>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Location)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Location)
-        </dd>
-    </dl>
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.UserId)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.UserId)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Gender)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Gender)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Age)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Age)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Location)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Location)
+    </dd>
+    <dt class="col-sm-2">
+        See feed:
+    </dt>
+    <dd class="col-sm-10">
+        @Html.ActionLink("Feed", "Details", "Feed", new { id = Model.UserId })
+    </dd>
+</dl>
+
+<hr/>
+<div style="float:end">
+    <ul style="width: 20%; float:left">
+        <h3>Followers:</h3>
+        @{
+            if (Model.Followers != null)
+            {
+                foreach (var follower in Model.Followers)
+                {
+                    <li>@follower</li>
+                }
+            }
+        }
+    </ul>
+
+    <ul style="width: 20%; float: left">
+        <h3>Circles:</h3>
+        @{
+            if (Model.Circles != null)
+            {
+                foreach (var circle in Model.Circles)
+                {
+                    <li>@circle</li>
+                }
+            }
+        }
+    </ul>
+
+    <ul style="width: 20%;float:left">
+        <h3>You follow:</h3>
+        @{
+            if (Model.Following != null)
+            {
+                foreach (var follow in Model.Following)
+                {
+                    <li>@follow</li>
+                }
+            }
+        }
+    </ul>
+
+    <ul style="width: 20%; float: left">
+        <h3>Blocked:</h3>
+        @{
+            if (Model.Blocked != null)
+            {
+                foreach (var block in Model.Blocked)
+                {
+                    <li>@block</li>
+                }
+            }
+        }
+    </ul>
+
 </div>
-
-
-<ul style="width: 20%; float:left">
-    <h3>Followers:</h3>
-    @{
-        if (Model.Followers != null)
-        {
-            foreach (var follower in Model.Followers)
-            {
-                <li>@follower</li>
-            }
-        }
-    }
-</ul>
-
-<ul style="width: 20%; float: left">
-    <h3>Circles:</h3>
-    @{
-        if (Model.Circles != null)
-        {
-            foreach (var circle in Model.Circles)
-            {
-                <li>@circle</li>
-            }
-        }
-    }
-</ul>
-
-<ul style="width: 20%;float:left">
-    <h3>You follow:</h3>
-    @{
-        if (Model.Following != null)
-        {
-            foreach (var follow in Model.Following)
-            {
-                <li>@follow</li>
-            }
-        }
-    }
-</ul>
-
-<ul style="width: 20%; float: left">
-    <h3>Blocked:</h3>
-    @{
-        if (Model.Blocked != null)
-        {
-            foreach (var block in Model.Blocked)
-            {
-                <li>@block</li>
-            }
-        }
-    }
-</ul>
-
 
 <br/>
 <br />
 <br />
 <br />
 <br />
+<hr/>
+
+<div style="width: 60%; float:left">
+    <h5>Add a follower:</h5>
+    <form asp-controller="User" asp-action="AddFollower">
+        <input type="hidden" asp-for="UserId" value="@Model.UserId">
+        <label>UserId: </label>
+        <input type="text" id="userToFollowId" name="userToFollowId" />
+        <input type="submit" />
+    </form>
 
 
+    <h5>Follow a user:</h5>
+    <form asp-controller="User" asp-action="AddFollowing">
+        <input type="hidden" asp-for="UserId" value="@Model.UserId">
+        <label>UserId: </label>
+        <input type="text" id="userToFollowingId" name="userToFollowingId" />
+        <input type="submit" />
+    </form>
 
-<h5>Add a follower:</h5>
-<form asp-controller="User" asp-action="AddFollower">
-    <input type="hidden" asp-for="UserId" value="@Model.UserId">
-    <label>UserId of person who you want to follow you: </label>
-    <input type="text" id="userToFollowId" name="userToFollowId" />
-    <input type="submit" />
-</form>
-
-
-<h5>Follow a user:</h5>
-<form asp-controller="User" asp-action="AddFollowing">
-    <input type="hidden" asp-for="UserId" value="@Model.UserId">
-    <label>UserId of person you want to follow: </label>
-    <input type="text" id="userToFollowingId" name="userToFollowingId" />
-    <input type="submit" />
-</form>
-
-<h5>Block a user:</h5>
-<form asp-controller="User" asp-action="AddBlocking">
-    <input type="hidden" asp-for="UserId" value="@Model.UserId">
-    <label>UserId of person you want to block: </label>
-    <input type="text" id="userToBlockId" name="userToBlockId" />
-    <input type="submit" />
-</form>
-<h5>Join a circle:</h5>
-<form asp-controller="Circle" asp-action="AddUser">
-    <input type="hidden" asp-for="UserId" value="@Model.UserId" />
-    <label>Name of the circle, you want to follow</label>
-    <input type="text" id="CircleName" name="CircleName" />
-    <input type="submit" />
-</form>
-
-
-<div >
-    @Html.ActionLink("Feed", "Details", "Feed", new {id = Model.UserId}) |
-    @Html.ActionLink("Wall", "Details", "Wall", new {id = Model.UserId})
+    <h5>Block a user:</h5>
+    <form asp-controller="User" asp-action="AddBlocking">
+        <input type="hidden" asp-for="UserId" value="@Model.UserId">
+        <label>UserId: </label>
+        <input type="text" id="userToBlockId" name="userToBlockId" />
+        <input type="submit" />
+    </form>
+    <h5>Join a circle:</h5>
+    <form asp-controller="Circle" asp-action="AddUser">
+        <input type="hidden" asp-for="UserId" value="@Model.UserId" />
+        <label>Name:  </label>
+        <input type="text" id="CircleName" name="CircleName" />
+        <input type="submit" />
+    </form>
 </div>
-<ul>
-
-
-    @{
-        var list = ViewData["userlist"] as List<User>;
-        
-        foreach (var user in list)
-        {
-            <li>
-                @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new { viewerId = Model.UserId, userId = user.UserId})
-            </li>
-        }
-    }
-</ul>
 
 <div style="width: 40%; float: left">
+    <h5>Visit another user:</h5>
+    
+    <ul>
+
+
+        @{
+            var list = ViewData["userlist"] as List<User>;
+        
+            foreach (var user in list)
+            {
+                <li>
+                    @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new { viewerId = Model.UserId, userId = user.UserId})
+                </li>
+            }
+        }
+    </ul>
+
+    
+</div>
+
+
+<div style="width: 60%; float: left">
     @await Html.PartialAsync("~/Views/Post/Create.cshtml", 
         new Post{OwnerId = Model.UserId})
 </div>
