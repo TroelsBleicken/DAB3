@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DAL;
 using SocialNetwork.Models;
 
@@ -41,6 +42,7 @@ namespace SocialNetwork.Controllers
                 if(string.IsNullOrEmpty(post.OwnerId))
                     post.OwnerId = id;
 
+                post.CreationTime = DateTime.Now;
                 _postRepository.CreatePost(post);
                 var wall = _wallRepository.GetWallByUserId(post.OwnerId);
 
