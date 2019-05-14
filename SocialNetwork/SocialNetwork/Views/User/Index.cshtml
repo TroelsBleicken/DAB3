@@ -50,12 +50,8 @@
             </td>
             <td>
 
-                @Html.ActionLink("Edit", "Edit", "User", new { id = item.UserId }) |
-                @Html.ActionLink("Details", "Details", "User", new { id = item.UserId }) |
-                @Html.ActionLink("Delete", "Delete", "User", new { id = item.UserId }) |
-                @Html.ActionLink("Wall", "Details", "Wall", new { id = item.UserId }) |
-                @Html.ActionLink("Feed", "Details", "Feed", new { id = item.UserId }) |
-                @Html.ActionLink("Posts", "Create", "Post", new {post = new Post(), id = item.UserId })
+                @Html.ActionLink("Log in", "Details", "User", new {id = item.UserId}) |
+                @Html.ActionLink("Delete", "Delete", "User", new {id = item.UserId})
             </td>
         </tr>
 }

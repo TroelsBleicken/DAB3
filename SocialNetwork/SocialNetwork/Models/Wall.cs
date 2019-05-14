@@ -15,5 +15,10 @@ namespace SocialNetwork.Models
         public List<string> Posts { get; set; }
         public string User { get; set; }
         public string Circle { get; set; }
+
+        public Wall()
+        {
+            Posts = new List<string>();
+        }
     }
 }

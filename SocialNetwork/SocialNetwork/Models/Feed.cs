@@ -13,7 +13,12 @@ namespace SocialNetwork.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string FeedId { get; set; }
 
-        public List<string> Posts { get; set; } = new List<string>();
+        public List<string> Posts { get; set; }
         public string User { get; set; }
+
+        public Feed()
+        {
+            Posts = new List<string>();
+        }
     }
 }
