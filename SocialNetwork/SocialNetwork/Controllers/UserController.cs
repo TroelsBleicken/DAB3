@@ -29,6 +29,16 @@ namespace SocialNetwork.Controllers
         public ActionResult Details(string id)
         {
             ViewData["userlist"] = _userRepository.GetUsers();
+
+            var wall = _wallRepository.GetWallByUserId(id);
+            if (wall == null)
+            {
+                wall = new Wall { User = id };
+                _wallRepository.AddWall(wall);
+            }
+
+
+            ViewData["wall"] = wall;
             return View(_userRepository.GetUser(id));
         }
 

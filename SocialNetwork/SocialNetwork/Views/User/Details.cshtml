@@ -140,7 +140,7 @@
 </form>
 
 
-<div>
+<div >
     @Html.ActionLink("Feed", "Details", "Feed", new {id = Model.UserId}) |
     @Html.ActionLink("Wall", "Details", "Wall", new {id = Model.UserId})
 </div>
@@ -159,7 +159,12 @@
     }
 </ul>
 
-@{ ViewData["userId"] = Model.UserId;}
-@await Html.PartialAsync("~/Views/Post/Create.cshtml", 
-    new Post{OwnerId = Model.UserId}, 
-    new ViewDataDictionary(ViewData))
+<div style="width: 40%; float: left">
+    @await Html.PartialAsync("~/Views/Post/Create.cshtml", 
+        new Post{OwnerId = Model.UserId})
+</div>
+<div style="width: 40%; float: left">
+    @await Html.PartialAsync("~/Views/Wall/Details.cshtml", 
+        ViewData["wall"] as Wall)
+</div>
+
