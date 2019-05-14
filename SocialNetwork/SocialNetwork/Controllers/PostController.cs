@@ -7,9 +7,11 @@ namespace SocialNetwork.Controllers
     public class PostController : Controller
     {
         PostRepository _postRepository;
-        public PostController(PostRepository postRepository)
+        private WallRepository _wallRepository;
+        public PostController(PostRepository postRepository, WallRepository wallRepository)
         {
             _postRepository = postRepository;
+            _wallRepository = wallRepository;
         }
         // GET: Post
         public ActionResult Index()
@@ -36,8 +38,16 @@ namespace SocialNetwork.Controllers
         {
             try
             {
-                post.OwnerId = id;
+                if(string.IsNullOrEmpty(post.OwnerId))
+                    post.OwnerId = id;
+
                 _postRepository.CreatePost(post);
+                var wall = _wallRepository.GetWallByUserId(post.OwnerId);
+
+                wall.Posts.Add(post.PostId);
+
+                _wallRepository.Update(wall);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
