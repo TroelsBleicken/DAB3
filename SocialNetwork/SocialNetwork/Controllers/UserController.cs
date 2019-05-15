@@ -47,9 +47,12 @@ namespace SocialNetwork.Controllers
             ViewData["wall"] = wall;
             var posts = new List<Post>();
 
-            foreach (var post in wall.Posts)
+            if (wall != null)
             {
-                posts.Add(_postRepository.GetPost(post));
+                foreach (var post in wall.Posts)
+                {
+                    posts.Add(_postRepository.GetPost(post));
+                }
             }
 
             ViewData["posts"] = posts;
