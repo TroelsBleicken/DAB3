@@ -26,16 +26,4 @@
 </div>
 <div>
     <h4>Post from this user: </h4>
-    <ul>
-        @{
-            foreach (var post in ViewData["post"] as List<Post>)
-            {
-                <li style="">@post.Text</li>
-                <ul>
-                    
-                </ul>
-                @Html.ActionLink("Add comment", "AddComment", "Post", new {})
-            }
-        }
-    </ul>
 </div>
