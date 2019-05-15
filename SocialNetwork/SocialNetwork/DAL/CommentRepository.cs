@@ -33,6 +33,11 @@ namespace SocialNetwork.DAL
             return _comments.Find<Comment>(comment => comment.CommentId == id).FirstOrDefault();
         }
 
+        public List<Comment> GetCommentsByPost(string postId)
+        {
+            return _comments.Find<Comment>(comment => comment.PostId == postId).ToList();
+        }
+
         public Comment CreateComment(Comment comment)
         {
             _comments.InsertOne(comment);
