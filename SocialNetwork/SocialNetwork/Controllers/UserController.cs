@@ -12,11 +12,17 @@ namespace SocialNetwork.Controllers
         UserRepository _userRepository;
         private FeedRepository _feedRepository;
         private WallRepository _wallRepository;
-        public UserController(UserRepository userRepository, FeedRepository feedRepository, WallRepository wallRepository)
+        private PostRepository _postRepository;
+        public UserController(
+            UserRepository userRepository, 
+            FeedRepository feedRepository, 
+            WallRepository wallRepository,
+            PostRepository postRepository)
         {
             _userRepository = userRepository;
             _feedRepository = feedRepository;
             _wallRepository = wallRepository;
+            _postRepository = postRepository;
         }
         // GET: User
         public ActionResult Index()
@@ -39,6 +45,15 @@ namespace SocialNetwork.Controllers
 
 
             ViewData["wall"] = wall;
+            var posts = new List<Post>();
+
+            foreach (var post in wall.Posts)
+            {
+                posts.Add(_postRepository.GetPost(post));
+            }
+
+            ViewData["posts"] = posts;
+
             return View(_userRepository.GetUser(id));
         }
 

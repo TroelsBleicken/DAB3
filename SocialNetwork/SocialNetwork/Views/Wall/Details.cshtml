@@ -28,16 +28,11 @@
     <h4>Post from this user: </h4>
     <ul>
         @{
-            foreach (var post in Model.Posts)
+            foreach (var post in ViewData["post"] as List<Post>)
             {
-                <li style="">@post</li>
+                <li style="">@post.Text</li>
                 <ul>
-                    @{
-                        foreach (var VARIABLE in post)
-                        {
-                            <li></li>
-                        }
-                    }
+                    
                 </ul>
                 @Html.ActionLink("Add comment", "AddComment", "Post", new {})
             }
