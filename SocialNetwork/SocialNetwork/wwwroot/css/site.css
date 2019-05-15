@@ -18,8 +18,18 @@ html {
   }
 }
 body {
-    background: #ff9001;
+    background-image: linear-gradient(to top, #ff9001, #ff8a00, #ff8400, #ff7e00, #ff7800, #f97301, #f46e02, #ee6903, #e26504, #d66006, #ca5c07, #be5708);
+    color: #1A1A1A;
+}
 
+span {
+    background: #ffe8d1;
+}
+input {
+    background: #ffe8d1;
+}
+a {
+    color: #bca79c;
 }
 
 #search {

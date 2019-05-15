@@ -60,11 +60,17 @@ namespace SocialNetwork.DAL
             _posts.DeleteOne(p => p.PostId == id);
         }
 
-        public void AddComment(string postId, string userId ,string comment)
+        public void AddComment(string postId, string userId ,string cmnt)
         {
             var post = GetPost(postId);
-            var cmnt = new Comment(userId, comment); 
-            post.Comments.Add(cmnt);
+            var comment = new Comment
+            {
+                CommenterId = userId,
+                PostId = postId,
+                Text = cmnt,
+                TimeStamp = DateTime.Now
+            };
+            post.Comments.Add(comment.CommentId);
             UpdatePost(post.PostId, post);
         }
     }
