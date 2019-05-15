@@ -31,6 +31,15 @@
             foreach (var post in Model.Posts)
             {
                 <li style="">@post</li>
+                <ul>
+                    @{
+                        foreach (var VARIABLE in post)
+                        {
+                            <li></li>
+                        }
+                    }
+                </ul>
+                @Html.ActionLink("Add comment", "AddComment", "Post", new {})
             }
         }
     </ul>
