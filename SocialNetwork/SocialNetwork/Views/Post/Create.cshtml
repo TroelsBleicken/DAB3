@@ -7,7 +7,7 @@
         <form asp-action="Create" asp-controller="Post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input type="hidden" asp-for="PostId" value="@Model.PostId"/>
+                <input type="hidden" asp-for="PostId"/>
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
@@ -20,7 +20,9 @@
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="hidden" asp-for="OwnerId" value="@Model.OwnerId" />
+                <label asp-for="OwnerId" class="control-label"></label>
+                <input asp-for="OwnerId" class="form-control" />
+                
             </div>
             <div class="form-group">
                 <label asp-for="CircleId" class="control-label"></label>

@@ -39,8 +39,7 @@ namespace SocialNetwork.Controllers
         {
             try
             {
-                if(string.IsNullOrEmpty(post.OwnerId))
-                    post.OwnerId = id;
+                
 
                 post.CreationTime = DateTime.Now;
                 _postRepository.CreatePost(post);
@@ -54,7 +53,7 @@ namespace SocialNetwork.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
