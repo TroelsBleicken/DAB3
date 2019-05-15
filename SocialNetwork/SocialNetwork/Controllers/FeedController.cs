@@ -10,8 +10,7 @@ namespace SocialNetwork.Controllers
     {
         private FeedRepository _feedRepository;
         private UserRepository _userRepository;
-
-        private PostRepository _postRepository;
+    private PostRepository _postRepository;
         private WallRepository _wallRepository;
         private CircleRepository _circleRepository;
 
@@ -25,30 +24,43 @@ namespace SocialNetwork.Controllers
 
     }
 
-        public ActionResult SeePosts(string id)
+        public List<string> GetFeedPostsByUserID(string id)
         {
             List<Post> FeedPosts = new List<Post>();
             var feed = _feedRepository.GetFeedById(id);
             var user = _userRepository.GetUser(feed.User);
-            foreach (string UserID in user.Following)
-            {
-                var SpecificWall = _wallRepository.GetWallByUserId(UserID);
-                List<string> SpecificPosts = SpecificWall.Posts;
-                foreach (string PostID in SpecificPosts)
+
+            if(user != null) { 
+                foreach (string UserID in user.Following)
                 {
-                    FeedPosts.Add(_postRepository.GetPost(PostID));
+                    var SpecificWall = _wallRepository.GetWallByUserId(UserID);
+                    List<string> SpecificPosts = SpecificWall.Posts;
+                    foreach (string PostID in SpecificPosts)
+                    {
+                        FeedPosts.Add(_postRepository.GetPost(PostID));
+                    }
                 }
             }
 
-            foreach (string CircleID in user.Circles)
-            {
-                FeedPosts.Concat(_postRepository.GetPostsByUserCircle(CircleID));
+            if(user.Circles != null) { 
+                foreach (string CircleID in user.Circles)
+                {
+                    FeedPosts.Concat(_postRepository.GetPostsByUserCircle(CircleID));
 
+                }
             }
 
             List<Post> SortedFeedPosts = FeedPosts.OrderBy(o => o.CreationTime).ToList();
+            List<string> SortedFeedPostsIDs = new List<string>();
 
-            return View(SortedFeedPosts);
+            if(SortedFeedPostsIDs != null) { 
+                foreach (Post SortedFeedPost in SortedFeedPosts)
+                {
+                    SortedFeedPostsIDs.Add(SortedFeedPost.PostId);
+                }
+            }
+
+            return SortedFeedPostsIDs;
         }
 
 
@@ -65,10 +77,18 @@ namespace SocialNetwork.Controllers
             var feed = _feedRepository.GetFeedById(id);
 
             if (feed != null)
+            {
+                feed.Posts = GetFeedPostsByUserID(feed.User);
                 return View(feed);
+            }
+
             feed = _feedRepository.GetFeedByUserId(id);
             if (feed != null)
+            {
+                feed.Posts = GetFeedPostsByUserID(feed.User);
                 return View(feed);
+            }
+
             feed = new Feed
             {
                 Posts = new List<string>(),
