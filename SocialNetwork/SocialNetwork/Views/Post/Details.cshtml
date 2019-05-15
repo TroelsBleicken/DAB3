@@ -61,6 +61,19 @@
     </dl>
 </div>
 <div>
+    <h4>Post from this user: </h4>
+    <ul>
+        @{
+            foreach (var comment in Model.Comments)
+            {
+                <li style="">
+                    @comment
+                </li>
+            }
+        }
+    </ul>
+</div>
+<div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>

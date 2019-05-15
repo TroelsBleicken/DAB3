@@ -26,4 +26,14 @@
 </div>
 <div>
     <h4>Post from this user: </h4>
+    <ul>
+        @{
+            foreach (var post in Model.Posts)
+            {
+                <li style="">
+                    @post
+                </li>
+            }
+        }
+    </ul>
 </div>

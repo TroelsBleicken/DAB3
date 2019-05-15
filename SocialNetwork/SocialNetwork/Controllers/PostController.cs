@@ -7,7 +7,7 @@ namespace SocialNetwork.Controllers
 {
     public class PostController : Controller
     {
-        PostRepository _postRepository;
+        private PostRepository _postRepository;
         private WallRepository _wallRepository;
         public PostController(PostRepository postRepository, WallRepository wallRepository)
         {
