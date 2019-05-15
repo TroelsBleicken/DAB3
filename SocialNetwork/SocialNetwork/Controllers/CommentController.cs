@@ -41,16 +41,16 @@ namespace SocialNetwork.Controllers
         // POST: Post/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([FromForm]Comment comment, string commenterId, string postId)
+        public ActionResult Create([FromForm]Comment comment, string id)
         {
             try
             {
-                if (string.IsNullOrEmpty(comment.CommenterId))
-                    comment.CommenterId = commenterId;
+                if (string.IsNullOrEmpty(comment.PostId))
+                    comment.PostId = id;
 
                 comment.TimeStamp = DateTime.Now;
                 _commentRepository.CreateComment(comment);
-                var post = _postRepository.GetPost(postId);
+                var post = _postRepository.GetPost(id);
 
                 post.Comments.Add(comment.CommentId);
 

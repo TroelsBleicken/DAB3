@@ -77,3 +77,7 @@
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
+<div style="width: 60%; float: left">
+    @await Html.PartialAsync("~/Views/Comment/Create.cshtml",
+        new Comment{PostId = Model.PostId})
+</div>
