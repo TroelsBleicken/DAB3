@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DAL;
 using SocialNetwork.Models;
@@ -9,6 +10,7 @@ namespace SocialNetwork.Controllers
     {
         private FeedRepository _feedRepository;
         private UserRepository _userRepository;
+
         private PostRepository _postRepository;
         private WallRepository _wallRepository;
         private CircleRepository _circleRepository;
@@ -23,28 +25,30 @@ namespace SocialNetwork.Controllers
 
     }
 
-        public  List<Post> SortedPostsOnFeedByUserID(string id)
+        public ActionResult SeePosts(string id)
         {
             List<Post> FeedPosts = new List<Post>();
             var feed = _feedRepository.GetFeedById(id);
             var user = _userRepository.GetUser(feed.User);
-            foreach(string UserID in user.Following)
+            foreach (string UserID in user.Following)
             {
                 var SpecificWall = _wallRepository.GetWallByUserId(UserID);
                 List<string> SpecificPosts = SpecificWall.Posts;
-                foreach(string PostID in SpecificPosts)
+                foreach (string PostID in SpecificPosts)
                 {
                     FeedPosts.Add(_postRepository.GetPost(PostID));
                 }
             }
-            foreach(string CircleID in user.Circles)
+
+            foreach (string CircleID in user.Circles)
             {
                 FeedPosts.Concat(_postRepository.GetPostsByUserCircle(CircleID));
-                List<string> SpecificPosts = new List<string>();
+
             }
 
             List<Post> SortedFeedPosts = FeedPosts.OrderBy(o => o.CreationTime).ToList();
-            return SortedFeedPosts;
+
+            return View(SortedFeedPosts);
         }
 
 
