@@ -106,6 +106,7 @@ namespace SocialNetwork.Controllers
             }
         }
 
+        //Problem at det er circlename og ikke circleID????
         public ActionResult AddUser(string UserId, string CircleName)
         {
             try
