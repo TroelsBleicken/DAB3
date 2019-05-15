@@ -18,6 +18,7 @@ namespace SocialNetwork.Controllers
         {
             _commentRepository = commentRepository;
             _postRepository = postRepository;
+            
         }
 
         // GET: Comment
