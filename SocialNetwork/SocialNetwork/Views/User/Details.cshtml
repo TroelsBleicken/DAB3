@@ -44,11 +44,11 @@
         See feed:
     </dt>
     <dd class="col-sm-10">
-        @Html.ActionLink("Feed", "Details", "Feed", new { id = Model.UserId})
+        @Html.ActionLink("Feed", "Details", "Feed", new { id = Model.UserId })
     </dd>
 </dl>
 
-<hr/>
+<hr />
 <div style="float:end">
     <ul style="width: 20%; float:left">
         <h3>Followers:</h3>
@@ -70,7 +70,7 @@
             {
                 foreach (var circle in Model.Circles)
                 {
-                <li>@Html.ActionLink($"{circle}", "Details", "Circle", new { id = circle, loggedId = Model.UserId })</li>
+                    <li>@Html.ActionLink($"{circle}", "Details", "Circle", new { id = circle, loggedId = Model.UserId })</li>
                 }
             }
         }
@@ -104,14 +104,14 @@
 
 </div>
 
-<br/>
 <br />
 <br />
 <br />
 <br />
-<hr/>
+<br />
+<hr />
 
-<div style="width: 60%; float:left">
+<div class="" style="width: 60%; float:left">
     <h5>Add a follower:</h5>
     <form asp-controller="User" asp-action="AddFollower">
         <input type="hidden" asp-for="UserId" value="@Model.UserId">
@@ -139,7 +139,7 @@
     <h5>Join a circle:</h5>
     <form asp-controller="Circle" asp-action="AddUser">
         <input type="hidden" asp-for="UserId" value="@Model.UserId" />
-        <label>Name:  </label>
+        <label>CircleId:  </label>
         <input type="text" id="CircleId" name="CircleId" />
         <input type="submit" />
     </form>
@@ -147,7 +147,7 @@
 
 <div style="width: 40%; float: left">
     <h5>Visit another user:</h5>
-    
+
     <ul>
 
 
@@ -162,25 +162,30 @@
                     if (user.UserId != Model.UserId)
                     {
                         <li>
-                            @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new {viewerId = Model.UserId, userId = user.UserId})
+                            @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new { viewerId = Model.UserId, userId = user.UserId })
                         </li>
                     }
-                    
+
                 }
             }
-         }
+        }
     </ul>
 
-    
+
 </div>
 
 
 <div style="width: 60%; float: left">
-    @await Html.PartialAsync("~/Views/Post/Create.cshtml", 
+    @await Html.PartialAsync("~/Views/Post/Create.cshtml",
         new Post{OwnerId = Model.UserId})
 </div>
 <div style="width: 40%; float: left">
-    @await Html.PartialAsync("~/Views/Wall/Details.cshtml", 
+    @await Html.PartialAsync("~/Views/Wall/Details.cshtml",
         ViewData["wall"])
+
 </div>
 
+<div style="width: 40%; float: left">
+    @await Html.PartialAsync("~/Views/Circle/_Create.cshtml",
+        new Circle {  })
+</div>
