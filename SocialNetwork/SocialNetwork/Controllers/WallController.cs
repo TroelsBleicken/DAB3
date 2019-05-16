@@ -55,6 +55,16 @@ namespace SocialNetwork.Controllers
             return View(wall);
         }
 
+        public ActionResult DetailsFromCircle(string circleId, string userId)
+        {
+            var user = _userRepository.GetUser(userId);
+
+            var wall = _wallRepository.GetWallByCircleId(circleId);
+
+            ViewData["visitor"] = userId;
+            return View(wall);
+        }
+
         // GET: Wall/Create
         public ActionResult Create()
         {

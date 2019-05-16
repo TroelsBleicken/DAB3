@@ -12,6 +12,8 @@ namespace SocialNetwork.DAL
     {
         private readonly IMongoCollection<Feed> _feeds;
 
+        
+
         public FeedRepository(IConfiguration config)
         {
             var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));

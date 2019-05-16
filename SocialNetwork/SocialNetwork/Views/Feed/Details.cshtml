@@ -29,7 +29,7 @@
         int i = 1;
         foreach (var post in Model.Posts)
         {
-    <div>@post @Html.ActionLink("View", "Details", "Post", new { id = post })</div> 
+    <div>@post @Html.ActionLink($"{post}", "DetailsFromUser", "Post", new { postId = post, viewerId = Model.User })</div> 
         }
     }
   

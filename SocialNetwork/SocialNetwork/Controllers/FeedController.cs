@@ -119,7 +119,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: Feed/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string id, string viewerId)
         {
             var feed = _feedRepository.GetFeedById(id);
 

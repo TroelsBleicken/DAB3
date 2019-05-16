@@ -40,6 +40,8 @@ namespace SocialNetwork.Controllers
             return View(post);
         }
 
+        
+
         // GET: Post/Create
         public ActionResult Create()
         {

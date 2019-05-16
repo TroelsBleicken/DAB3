@@ -12,6 +12,8 @@ namespace SocialNetwork.DAL
     {
         private readonly IMongoCollection<Circle> _circles;
 
+        
+
         public CircleRepository(IConfiguration config)
         {
             var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));

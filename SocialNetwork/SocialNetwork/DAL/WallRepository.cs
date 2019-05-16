@@ -12,17 +12,6 @@ namespace SocialNetwork.DAL
     {
         private readonly IMongoCollection<Wall> _walls;
 
-        public WallRepository(IConfiguration config)
-        {
-            var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));
-            var database = client.GetDatabase("SocialNetworkDb");
-
-            if (!MongoDbHelpFunctions.CollectionExists(database, "Walls"))
-                database.CreateCollection("Walls");
-
-            _walls = database.GetCollection<Wall>("Walls");
-        }
-
         public Wall AddWall(Wall wall)
         {
             _walls.InsertOne(wall);
