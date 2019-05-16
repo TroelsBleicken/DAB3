@@ -10,10 +10,12 @@ namespace SocialNetwork.Controllers
     {
         private PostRepository _postRepository;
         private WallRepository _wallRepository;
-        public PostController(PostRepository postRepository, WallRepository wallRepository)
+        private CommentRepository _commentRepository;
+        public PostController(PostRepository postRepository, WallRepository wallRepository, CommentRepository commentRepository)
         {
             _postRepository = postRepository;
             _wallRepository = wallRepository;
+            _commentRepository = commentRepository;
         }
         // GET: Post
         public ActionResult Index()
@@ -25,6 +27,17 @@ namespace SocialNetwork.Controllers
         public ActionResult Details(string id)
         {
             return View(_postRepository.GetPost(id));
+
+        }
+
+        public ActionResult DetailsFromUser(string postId, string viewerId)
+        {
+            var post = _postRepository.GetPost(postId);
+            var comments = _commentRepository.GetCommentsByPost(postId);
+
+            ViewData["comments"] = comments;
+            ViewData["viewer"] = viewerId;
+            return View(post);
         }
 
         // GET: Post/Create

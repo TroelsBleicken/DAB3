@@ -1,0 +1,36 @@
+﻿@model Post
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div>
+    <h4>@Model.Text</h4>
+    <hr />
+    <h6 style="font-weight: lighter; font-style: italic">@Model.CreationTime.ToString("f")</h6>
+</div>
+<div>
+    <h6>Comments:</h6>
+    <div>
+        <ul style="list-style: none; padding-left: 20px">
+            @{
+                if (ViewData["comments"] != null)
+                {
+                    foreach (var comment in ViewData["comments"] as List<Comment>)
+                    {
+                        <li style="">
+                            @comment.Text <br/>
+                            <h6 style="font-weight: lighter; font-style: italic">By @comment.CommenterId</h6>
+                        </li>
+                    }
+                }
+
+            }
+        </ul>
+    </div>
+</div>
+<div style="width: 60%; float: left">
+    @await Html.PartialAsync("~/Views/Comment/Create.cshtml",
+        new Comment{PostId = Model.PostId, CommenterId = ViewData["viewer"] as string})
+</div>
