@@ -30,6 +30,7 @@ namespace SocialNetwork
             services.AddScoped<FeedRepository>();
             services.AddScoped<PostRepository>();
             services.AddScoped<WallRepository>();
+            services.AddScoped<CommentRepository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
