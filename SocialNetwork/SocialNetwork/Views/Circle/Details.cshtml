@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.WallId)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.WallId)
+            @Html.ActionLink($"{Model.WallId}", "DetailsFromCircle", "Wall", new { circleId = Model.CircleId, userId = (ViewData["userId"] as string) })
         </dd>
 
     </dl>

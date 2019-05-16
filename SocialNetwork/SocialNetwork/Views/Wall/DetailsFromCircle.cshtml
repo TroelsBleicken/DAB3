@@ -1,9 +1,8 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "DetailsFromUser";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Wall 
+@model Wall
 
 <h1>DetailsFromUser</h1>
 <div>
@@ -31,12 +30,12 @@
     </dl>
 </div>
 <div>
-    <h4>Post from this user: </h4>
+    <h4>Posts: </h4>
     <ul>
         @{
             foreach (var post in Model.Posts)
             {
-                <li style="">@Html.ActionLink($"{post}", "DetailsFromUser", "Post", new { postId = post, viewerId = (ViewData["vistor"] as string) })</li>
+        <li >@Html.ActionLink($"{post}", "DetailsFromUser", "Post", new { postId = post, viewerId = (ViewData["visitor"] as string) })</li>
             }
         }
     </ul>

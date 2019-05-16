@@ -44,7 +44,7 @@
         See feed:
     </dt>
     <dd class="col-sm-10">
-        @Html.ActionLink("Feed", "Details", "Feed", new { id = Model.UserId })
+        @Html.ActionLink("Feed", "Details", "Feed", new { id = Model.UserId})
     </dd>
 </dl>
 
@@ -70,7 +70,7 @@
             {
                 foreach (var circle in Model.Circles)
                 {
-                    <li>@circle</li>
+                <li>@Html.ActionLink($"{circle}", "Details", "Circle", new { id = circle, loggedId = Model.UserId })</li>
                 }
             }
         }

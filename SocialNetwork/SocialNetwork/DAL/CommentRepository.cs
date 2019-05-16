@@ -12,6 +12,8 @@ namespace SocialNetwork.DAL
     {
         private readonly IMongoCollection<Comment> _comments;
 
+        
+
         public CommentRepository(IConfiguration config)
         {
             var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));

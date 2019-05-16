@@ -12,6 +12,9 @@ namespace SocialNetwork.DAL
     {
         private readonly IMongoCollection<User> _users;
 
+
+        
+
         public UserRepository(IConfiguration config)
         {
             var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));
@@ -37,6 +40,7 @@ namespace SocialNetwork.DAL
         public User CreateUser(User user)
         {
             _users.InsertOne(user);
+            
             return user;
         }
 

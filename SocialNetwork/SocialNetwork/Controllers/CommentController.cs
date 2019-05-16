@@ -53,8 +53,8 @@ namespace SocialNetwork.Controllers
                 post.Comments.Add(comment.CommentId);
 
                 _postRepository.UpdatePost(post.PostId, post);
-
-                return RedirectToAction(nameof(Index));
+                
+                return RedirectToAction("Index", "Home");
             }
             catch
             {

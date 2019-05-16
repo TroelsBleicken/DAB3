@@ -27,7 +27,7 @@ namespace SocialNetwork.Controllers
         }
 
         // GET: Circle/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(string id, string loggedId)
         {
 
             var circle = _circleRepository.GetCircleById(id);
@@ -40,7 +40,7 @@ namespace SocialNetwork.Controllers
             }
 
             ViewData["Message"] = user;
-            
+            ViewData["userId"] = loggedId;
             return View(circle);
         }
 

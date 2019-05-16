@@ -12,6 +12,8 @@ namespace SocialNetwork.DAL
     {
         private readonly IMongoCollection<Post> _posts;
 
+        
+
         public PostRepository(IConfiguration config)
         {
             var client = new MongoClient(config.GetConnectionString("SocialNetworkDb"));
