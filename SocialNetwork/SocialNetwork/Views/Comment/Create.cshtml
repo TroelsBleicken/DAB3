@@ -4,10 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>Comment</h4>
 <hr />
+Leave comment as @Model.CommenterId
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" asp-controller="Comment">
@@ -22,7 +21,7 @@
                 <input type="hidden" asp-for="CommenterId" value="@Model.CommenterId"/>
             </div>
             <div class="form-group">
-                <label asp-for="Text" class="control-label"></label>
+                <label>Comment:</label>
                 <input asp-for="Text" class="form-control" />
                 <span asp-validation-for="Text" class="text-danger"></span>
             </div>
@@ -34,8 +33,4 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
