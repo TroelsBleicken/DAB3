@@ -40,6 +40,7 @@ namespace SocialNetwork.DAL
         public User CreateUser(User user)
         {
             _users.InsertOne(user);
+            
             return user;
         }
 
