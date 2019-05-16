@@ -96,7 +96,9 @@ namespace SocialNetwork.Controllers
             );
             
             //Konverterer post listen til string liste 
-            
+
+            feed.Posts.Clear();
+
             if(FeedPosts != null) { 
                 foreach (Post FeedPost in FeedPosts)
                 {
