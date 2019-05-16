@@ -18,12 +18,12 @@ namespace SocialNetwork.Models
         public string CircleId { get; set; }
         public DateTime CreationTime { get; set; }
         public Detail Details { get; set; }
-        public List<Comment> Comments { get; set; }
+        public List<string> Comments { get; set; }
 
         public Post()
         {
             if(Comments == null)
-                Comments = new List<Comment>();
+                Comments = new List<string>();
         }
     }
 }

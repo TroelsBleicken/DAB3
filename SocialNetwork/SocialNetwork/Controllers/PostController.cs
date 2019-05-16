@@ -7,7 +7,7 @@ namespace SocialNetwork.Controllers
 {
     public class PostController : Controller
     {
-        PostRepository _postRepository;
+        private PostRepository _postRepository;
         private WallRepository _wallRepository;
         public PostController(PostRepository postRepository, WallRepository wallRepository)
         {
@@ -39,13 +39,11 @@ namespace SocialNetwork.Controllers
         {
             try
             {
-                if(string.IsNullOrEmpty(post.OwnerId))
-                    post.OwnerId = id;
-
+                
                 post.CreationTime = DateTime.Now;
                 _postRepository.CreatePost(post);
                 var wall = _wallRepository.GetWallByUserId(post.OwnerId);
-
+                //problem at der altid tilføjes til wall, også hvis der skal tilføjes til circle? der mangler i øvrigt at tilføjes til circle
                 wall.Posts.Add(post.PostId);
 
                 _wallRepository.Update(wall);
@@ -54,7 +52,7 @@ namespace SocialNetwork.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 

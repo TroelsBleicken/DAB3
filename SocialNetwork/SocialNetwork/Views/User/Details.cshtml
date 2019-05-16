@@ -153,14 +153,17 @@
 
         @{
             var list = ViewData["userlist"] as List<User>;
-        
-            foreach (var user in list)
+
+            if (list != null)
             {
+                foreach (var user in list)
+                {
                 <li>
-                    @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new { viewerId = Model.UserId, userId = user.UserId})
+                    @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new { viewerId = Model.UserId, userId = user.UserId })
                 </li>
+                    }
+                }
             }
-        }
     </ul>
 
     

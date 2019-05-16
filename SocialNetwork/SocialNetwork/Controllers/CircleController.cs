@@ -29,13 +29,17 @@ namespace SocialNetwork.Controllers
         {
 
             var circle = _circleRepository.GetCircleById(id);
-            var list = new List<string>();
+
+            
+
+
+            var user = new List<string>();
             foreach (var userId in circle.Users)
             {
-                list.Add(_userRepository.GetUser(userId).Name);
+                user.Add(_userRepository.GetUser(userId).Name);
             }
 
-            ViewData["Message"] = list;
+            ViewData["Message"] = user;
             
             return View(circle);
         }
@@ -106,6 +110,7 @@ namespace SocialNetwork.Controllers
             }
         }
 
+        //Problem at det er circlename og ikke circleID????
         public ActionResult AddUser(string UserId, string CircleName)
         {
             try

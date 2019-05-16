@@ -61,6 +61,11 @@ namespace SocialNetwork.DAL
            return _walls.Find(w => w.User == id).FirstOrDefault();
         }
 
+        public Wall GetWallByCircleId(string id)
+        {
+            return _walls.Find(w => w.Circle == id).FirstOrDefault();
+        }
+
         public List<string> GetAllPosts(string id)
         {
             var _wall = _walls.Find(w => w.User == id).FirstOrDefault();

@@ -28,7 +28,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Text)
         </dd>
-
         <dt class="col-sm-2">
             <!--Html.DisplayNameFor(model => model.Owner)-->
         </dt>
@@ -53,9 +52,32 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Details)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
     </dl>
+</div>
+<div>
+    <h4>Post from this user: </h4>
+    <ul>
+        @{
+            foreach (var comment in Model.Comments)
+            {
+                <li style="">
+                    @comment
+                </li>
+            }
+        }
+    </ul>
 </div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
+</div>
+<div style="width: 60%; float: left">
+    @await Html.PartialAsync("~/Views/Comment/Create.cshtml",
+        new Comment{PostId = Model.PostId})
 </div>
