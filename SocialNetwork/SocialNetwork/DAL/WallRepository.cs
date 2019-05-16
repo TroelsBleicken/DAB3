@@ -23,9 +23,10 @@ namespace SocialNetwork.DAL
             _walls = database.GetCollection<Wall>("Walls");
         }
 
-        public void AddWall(Wall wall)
+        public Wall AddWall(Wall wall)
         {
             _walls.InsertOne(wall);
+            return wall;
         }
 
         public void Update(Wall wall)

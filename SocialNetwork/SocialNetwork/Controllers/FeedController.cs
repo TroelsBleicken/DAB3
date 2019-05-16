@@ -27,11 +27,15 @@ namespace SocialNetwork.Controllers
 
         public List<string> GetFeedPostsByFeedID(string id)
         {
+            //List of posts 
             List<Post> FeedPosts = new List<Post>();
+
+            //Feed, the user, and the wall are found 
             var feed = _feedRepository.GetFeedById(id);
             var user = _userRepository.GetUser(feed.User);
             var usersWall = _wallRepository.GetWallByUserId(user.UserId);
 
+            //All posts of the users own wall are read
             if (usersWall.Posts != null)
             {
                 foreach (string postID in usersWall.Posts)
@@ -40,14 +44,17 @@ namespace SocialNetwork.Controllers
                 }
             }
 
+            //gennemløber alle brugere som en user følger
             if(user.UserId != null) { 
                 foreach (string FriendUserID in user.Following)
                 {
                     if (FriendUserID != null)
                     {
+                        //Tjekker om en bruger som followes har blokeret brugeren
                         var friendUser = _userRepository.GetUser(FriendUserID);
                         if (!(friendUser.Blocked.Contains(user.UserId)))
                         {
+                            //indlæser den followede brugers væg, og tilføjer alle posts fra denne til den samlede liste over posts
                             var SpecificWall = _wallRepository.GetWallByUserId(FriendUserID);
                             List<string> SpecificPosts = SpecificWall.Posts;
                             foreach (string PostID in SpecificPosts)
@@ -59,30 +66,46 @@ namespace SocialNetwork.Controllers
                 }
             }
 
+            //Gå igennem alle en users circles
             if(user.Circles != null) { 
                 foreach (string CircleID in user.Circles)
                 {
+                    //opretter liste med alle post i en circle
+                    List<Post> PostsInCircle = _postRepository.GetPostsByUserCircle(CircleID);
 
-
-
-                    FeedPosts.Concat(_postRepository.GetPostsByUserCircle(CircleID));
+                    if (PostsInCircle != null)
+                    {
+                        //gennemløber alle posts i en circle, og tjekker post owner har blokeret brugeren. 
+                        foreach (Post circlePost in PostsInCircle)
+                        {
+                            User postOwner = _userRepository.GetUser(circlePost.OwnerId);
+                            if (!(postOwner.Blocked.Contains(user.UserId)))
+                            {
+                                //tilføjer post til samlet oversigt over posts
+                                FeedPosts.Add(circlePost);
+                            }
+                        }
+                    }
+                    
                 }
             }
 
+            //Sorterer den samlede liste over posts.
             FeedPosts.Sort(delegate (Post t1, Post t2)
                 { return (t1.CreationTime.CompareTo(t2.CreationTime)); }
             );
             
-            List<string> SortedFeedPostsIDs = new List<string>();
-
+            //Konverterer post listen til string liste 
+            
             if(FeedPosts != null) { 
                 foreach (Post FeedPost in FeedPosts)
                 {
-                    SortedFeedPostsIDs.Add(FeedPost.PostId);
+                    feed.Posts.Add(FeedPost.PostId);
                 }
             }
 
-            return SortedFeedPostsIDs;
+            //Returnerer liste over alle posts som en bruger har adgang til
+            return feed.Posts;
         }
 
 
