@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using SocialNetwork.DAL;
 using SocialNetwork.Models;
 
@@ -48,11 +49,11 @@ namespace SocialNetwork.Controllers
 
                 _wallRepository.Update(wall);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Post", new { @id = post.PostId  });
             }
             catch
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Post", new { @id = post.PostId });
             }
         }
 
