@@ -158,12 +158,17 @@
             {
                 foreach (var user in list)
                 {
-                <li>
-                    @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new { viewerId = Model.UserId, userId = user.UserId })
-                </li>
+
+                    if (user.UserId != Model.UserId)
+                    {
+                        <li>
+                            @Html.ActionLink($"{user.Name}", "DetailsFromUser", "Wall", new {viewerId = Model.UserId, userId = user.UserId})
+                        </li>
                     }
+                    
                 }
             }
+         }
     </ul>
 
     

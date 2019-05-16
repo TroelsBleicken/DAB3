@@ -42,16 +42,13 @@ namespace SocialNetwork.Controllers
         // POST: Post/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([FromForm]Comment comment, string id)
+        public ActionResult Create([FromForm]Comment comment)
         {
             try
             {
-                if (string.IsNullOrEmpty(comment.PostId))
-                    comment.PostId = id;
-
                 comment.TimeStamp = DateTime.Now;
                 _commentRepository.CreateComment(comment);
-                var post = _postRepository.GetPost(id);
+                var post = _postRepository.GetPost(comment.PostId);
 
                 post.Comments.Add(comment.CommentId);
 
@@ -68,7 +65,7 @@ namespace SocialNetwork.Controllers
         // GET: Comment/Edit/5
         public ActionResult Edit(string id)
         {
-            return View(_postRepository.GetPost(id));
+            return View(_commentRepository.GetComment(id));
         }
 
         // POST: Comment/Edit/5

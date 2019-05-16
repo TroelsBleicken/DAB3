@@ -24,6 +24,15 @@ namespace SocialNetwork.Controllers
         public ActionResult Details(string id)
         {
             return View(_postRepository.GetPost(id));
+
+        }
+
+        public ActionResult DetailsFromUser(string postId, string viewerId)
+        {
+            var post = _postRepository.GetPost(postId);
+
+            ViewData["viewer"] = viewerId;
+            return View(post);
         }
 
         // GET: Post/Create

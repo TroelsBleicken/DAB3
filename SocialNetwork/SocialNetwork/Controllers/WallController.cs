@@ -43,6 +43,18 @@ namespace SocialNetwork.Controllers
             return View(wall);
         }
 
+        public ActionResult DetailsFromUser(string viewerId, string userId)
+        {
+            var user = _userRepository.GetUser(userId);
+
+            if (user.Blocked.Contains(viewerId))
+                return View("BlockedPage"); 
+            var wall = _wallRepository.GetWallByUserId(userId);
+
+            ViewData["visitor"] = userId;
+            return View(wall);
+        }
+
         // GET: Wall/Create
         public ActionResult Create()
         {
@@ -130,23 +142,5 @@ namespace SocialNetwork.Controllers
             
         }
 
-        public ActionResult DetailsFromUser(string viewerId,string userId)
-        {
-            var user = _userRepository.GetUser(userId);
-
-            try
-            {
-                if (user.Blocked.Contains(viewerId))
-                    return View();
-                else
-                {
-                    return RedirectToAction(nameof(Details), new {id = userId});
-                }
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
