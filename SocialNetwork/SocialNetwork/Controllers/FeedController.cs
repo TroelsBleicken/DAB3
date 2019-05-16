@@ -30,17 +30,30 @@ namespace SocialNetwork.Controllers
             List<Post> FeedPosts = new List<Post>();
             var feed = _feedRepository.GetFeedById(id);
             var user = _userRepository.GetUser(feed.User);
+            var usersWall = _wallRepository.GetWallByUserId(user.UserId);
 
-            if(user != null) { 
-                foreach (string UserID in user.Following)
+            if (usersWall.Posts != null)
+            {
+                foreach (string postID in usersWall.Posts)
                 {
-                    if (UserID != null)
+                    FeedPosts.Add(_postRepository.GetPost(postID));
+                }
+            }
+
+            if(user.UserId != null) { 
+                foreach (string FriendUserID in user.Following)
+                {
+                    if (FriendUserID != null)
                     {
-                        var SpecificWall = _wallRepository.GetWallByUserId(UserID);
-                        List<string> SpecificPosts = SpecificWall.Posts;
-                        foreach (string PostID in SpecificPosts)
+                        var friendUser = _userRepository.GetUser(FriendUserID);
+                        if (!(friendUser.Blocked.Contains(user.UserId)))
                         {
-                            FeedPosts.Add(_postRepository.GetPost(PostID));
+                            var SpecificWall = _wallRepository.GetWallByUserId(FriendUserID);
+                            List<string> SpecificPosts = SpecificWall.Posts;
+                            foreach (string PostID in SpecificPosts)
+                            {
+                                FeedPosts.Add(_postRepository.GetPost(PostID));
+                            }
                         }
                     }
                 }
@@ -49,8 +62,10 @@ namespace SocialNetwork.Controllers
             if(user.Circles != null) { 
                 foreach (string CircleID in user.Circles)
                 {
-                    FeedPosts.Concat(_postRepository.GetPostsByUserCircle(CircleID));
 
+
+
+                    FeedPosts.Concat(_postRepository.GetPostsByUserCircle(CircleID));
                 }
             }
 
