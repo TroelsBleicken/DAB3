@@ -5,29 +5,41 @@
     Layout = "_Layout";
 }
 
-<div>
+<div style="border: 3px solid #9a6f4a; border-radius: 10px; padding: 10px; padding: 10px;
+
+                                      background: #f2f2f2;
+
+                                      box-shadow: beige;
+
+                                      -webkit-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);
+
+                                      -moz-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);
+
+                                      box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);" >
     <h4>@Model.Text</h4>
     <hr />
     <h6 style="font-weight: lighter; font-style: italic">@Model.CreationTime.ToString("f")</h6>
-</div>
-<div>
-    <h6>Comments:</h6>
-    <div>
-        <ul style="list-style: none; padding-left: 20px">
-            @{
-                if (ViewData["comments"] != null)
-                {
-                    foreach (var comment in ViewData["comments"] as List<Comment>)
-                    {
-                        <li style="">
-                            @comment.Text <br/>
-                            <h6 style="font-weight: lighter; font-style: italic">By @comment.CommenterId</h6>
-                        </li>
-                    }
-                }
 
-            }
-        </ul>
+    <div>
+        <h6>Comments:</h6>
+        <div style="border: 1px solid #ffeace; border-radius: 10px; background: white; padding: 11px">
+            <ul style="list-style: none; padding-left: 20px">
+                @{
+                    if (ViewData["comments"] != null)
+                    {
+                        foreach (var comment in ViewData["comments"] as List<Comment>)
+                        {
+                            <li style="">
+                                @comment.Text <br />
+                                <h6 style="font-weight: lighter; font-style: italic">By @comment.CommenterId</h6>
+                                <hr style="border-color: #ffeace;" />
+                            </li>
+                        }
+                    }
+
+                }
+            </ul>
+        </div>
     </div>
 </div>
 <div style="width: 60%; float: left">
