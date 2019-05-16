@@ -30,7 +30,7 @@
         @{
             foreach (var post in Model.Posts)
             {
-                <li style="">@post</li>
+                <li style="">@Html.ActionLink($"{post}", "Details", "Post", new {id = post})</li>
             }
         }
     </ul>
