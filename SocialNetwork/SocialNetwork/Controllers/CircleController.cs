@@ -14,10 +14,12 @@ namespace SocialNetwork.Controllers
         // GET: Circle
         private CircleRepository _circleRepository;
         private UserRepository _userRepository;
-        public CircleController(CircleRepository circleRepository, UserRepository userRepository) 
+        private WallRepository _wallRepository;
+        public CircleController(CircleRepository circleRepository, UserRepository userRepository, WallRepository wallRepository) 
         {
             _circleRepository = circleRepository;
             _userRepository = userRepository;
+            _wallRepository = wallRepository;
         }
         public ActionResult Index()
         {
@@ -31,8 +33,6 @@ namespace SocialNetwork.Controllers
             var circle = _circleRepository.GetCircleById(id);
 
             
-
-
             var user = new List<string>();
             foreach (var userId in circle.Users)
             {
@@ -58,8 +58,17 @@ namespace SocialNetwork.Controllers
             try
             {
                 _circleRepository.InsertCircle(circle);
+
+
+                var wall = _wallRepository.AddWall(new Wall
+                {
+                    Circle = circle.CircleId
+                });
+
+                circle.WallId = wall.WallId;
+                _circleRepository.UpdateCircle(circle);
                 return RedirectToAction(nameof(Index));
-            }
+            } 
             catch
             {
                 return View();

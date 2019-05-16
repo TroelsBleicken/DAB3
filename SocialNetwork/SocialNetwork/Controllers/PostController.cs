@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using SocialNetwork.DAL;
 using SocialNetwork.Models;
 
@@ -42,17 +43,23 @@ namespace SocialNetwork.Controllers
                 
                 post.CreationTime = DateTime.Now;
                 _postRepository.CreatePost(post);
-                var wall = _wallRepository.GetWallByUserId(post.OwnerId);
-                //problem at der altid tilføjes til wall, også hvis der skal tilføjes til circle? der mangler i øvrigt at tilføjes til circle
+
+                Wall wall;
+                if(post.CircleId == null)
+                    wall = _wallRepository.GetWallByUserId(post.OwnerId);
+                
+                else
+                    wall = _wallRepository.GetWallByCircleId(post.CircleId);
+
                 wall.Posts.Add(post.PostId);
 
                 _wallRepository.Update(wall);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Post", new { @id = post.PostId  });
             }
             catch
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Post", new { @id = post.PostId });
             }
         }
 
