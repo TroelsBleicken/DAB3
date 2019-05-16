@@ -123,11 +123,11 @@ namespace SocialNetwork.Controllers
         }
 
         //Problem at det er circlename og ikke circleID????
-        public ActionResult AddUser(string UserId, string CircleName)
+        public ActionResult AddUser(string UserId, string CircleId)
         {
             try
             {
-                var circle = _circleRepository.GetCircleByName(CircleName);
+                var circle = _circleRepository.GetCircleById(CircleId);
                 if(circle.Users == null)
                     circle.Users = new List<string>();
 
@@ -137,7 +137,7 @@ namespace SocialNetwork.Controllers
                 if(user.Circles == null)
                     user.Circles = new List<string>();
 
-                user.Circles.Add(CircleName);
+                user.Circles.Add(CircleId);
 
                 _userRepository.UpdateUser(user.UserId, user);
                 return RedirectToAction(nameof(Index));
