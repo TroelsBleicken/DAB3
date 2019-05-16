@@ -6,7 +6,6 @@
 @model Wall 
 
 <h1>DetailsFromUser</h1>
-
 <div>
     <h4>Wall</h4>
     <hr />
@@ -37,7 +36,7 @@
         @{
             foreach (var post in Model.Posts)
             {
-                <li style="">@Html.ActionLink($"{post}", "DetailsFromUser", "Post", new { postId = post, veiwerId = Model.User })</li>
+                <li style="">@Html.ActionLink($"{post}", "DetailsFromUser", "Post", new { postId = post, viewerId = Model.User })</li>
             }
         }
     </ul>
