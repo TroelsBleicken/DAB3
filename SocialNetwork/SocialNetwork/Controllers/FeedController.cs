@@ -81,7 +81,7 @@ namespace SocialNetwork.Controllers
                             User postOwner = _userRepository.GetUser(circlePost.OwnerId);
                             if (!(postOwner.Blocked.Contains(user.UserId)))
                             {
-                                PostsInCircle.Add(circlePost);
+                                FeedPosts.Add(circlePost);
                             }
                         }
                     }
