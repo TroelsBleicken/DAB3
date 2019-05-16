@@ -57,21 +57,18 @@ namespace SocialNetwork.Controllers
         {
             try
             {
-                if (circle.WallId == null)
-                {
-                    var wall = _wallRepository.AddWall(new Wall
-                    {
-                        Circle = circle.CircleId
-                    });
-
-                    circle.WallId = wall.WallId;
-                    _circleRepository.UpdateCircle(circle);
-                }
-
                 _circleRepository.InsertCircle(circle);
 
+
+                var wall = _wallRepository.AddWall(new Wall
+                {
+                    Circle = circle.CircleId
+                });
+
+                circle.WallId = wall.WallId;
+                _circleRepository.UpdateCircle(circle);
                 return RedirectToAction(nameof(Index));
-            }
+            } 
             catch
             {
                 return View();
