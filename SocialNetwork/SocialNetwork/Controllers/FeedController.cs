@@ -96,16 +96,16 @@ namespace SocialNetwork.Controllers
             );
             
             //Konverterer post listen til string liste 
-            List<string> SortedFeedPostsIDs = new List<string>();
+            
             if(FeedPosts != null) { 
                 foreach (Post FeedPost in FeedPosts)
                 {
-                    SortedFeedPostsIDs.Add(FeedPost.PostId);
+                    feed.Posts.Add(FeedPost.PostId);
                 }
             }
 
             //Returnerer liste over alle posts som en bruger har adgang til
-            return SortedFeedPostsIDs;
+            return feed.Posts;
         }
 
 
