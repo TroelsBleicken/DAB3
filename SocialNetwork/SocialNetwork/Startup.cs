@@ -75,14 +75,15 @@ namespace SocialNetwork
             var client = new MongoClient("mongodb://localhost:27017");
             client.DropDatabase("SocialNetworkDb");
             var database = client.GetDatabase("SocialNetworkDb");
-            
+
+            #region Users
             var userCollec = database.GetCollection<User>("Users");
             User seedUser1 = new User
             {
                 Age = 35,
                 Name = "Karsten",
                 Gender = "Mand",
-                Location = "Amager"
+                Location = "Amager", 
             };
             User seedUser2 = new User
             {
@@ -116,17 +117,29 @@ namespace SocialNetwork
                 Location = "Herning",
                 Following = new List<string> { seedUser2.UserId }
             };
-            seedUser1.Followers = new List<string>{seedUser2.UserId, seedUser4.UserId};
-            seedUser2.Followers = new List<string>{seedUser3.UserId, seedUser5.UserId};
-            seedUser2.Blocked.Add(seedUser4.UserId);
-            seedUser1.Blocked.Add(seedUser5.UserId);
+            
             userCollec.InsertOne(seedUser1);
             userCollec.InsertOne(seedUser2);
             userCollec.InsertOne(seedUser3);
             userCollec.InsertOne(seedUser4);
             userCollec.InsertOne(seedUser5);
 
+            seedUser1.Followers = new List<string> { seedUser2.UserId, seedUser4.UserId };
+            seedUser2.Following = new List<string> { seedUser1.UserId};
+            seedUser4.Following = new List<string> { seedUser1.UserId};
+            
+            seedUser2.Followers = new List<string> { seedUser3.UserId, seedUser5.UserId };
+            seedUser3.Following = new List<string>{seedUser2.UserId};
+            seedUser5.Following = new List<string>{seedUser2.UserId};
 
+            seedUser2.Blocked.Add(seedUser4.UserId);
+            seedUser1.Blocked.Add(seedUser5.UserId);
+
+            #endregion
+
+            #region Circles
+
+           
             var circleCollec = database.GetCollection<Circle>("Circles");
             Circle seedCircle1 = new Circle
             {
@@ -141,16 +154,25 @@ namespace SocialNetwork
             circleCollec.InsertOne(seedCircle1);
             circleCollec.InsertOne(seedCircle2);
 
+            seedUser1.Circles = new List<string>{seedCircle1.CircleId};
+            seedUser2.Circles = new List<string> { seedCircle1.CircleId };
+
+            seedUser3.Circles = new List<string> { seedCircle2.CircleId };
+            seedUser5.Circles = new List<string> { seedCircle2.CircleId };
+
+            #endregion
+
+            #region Walls
 
             var wallCollec = database.GetCollection<Wall>("Walls");
             Wall wallcircle1 = new Wall
             {
-                User = seedCircle1.CircleId,
+                
                 Circle = seedCircle1.CircleId
             };
             Wall wallcircle2 = new Wall
             {
-                User = seedCircle2.CircleId,
+                
                 Circle = seedCircle2.CircleId
             };
             Wall walluser1 = new Wall
@@ -181,6 +203,12 @@ namespace SocialNetwork
             wallCollec.InsertOne(walluser4);
             wallCollec.InsertOne(walluser5);
 
+            seedCircle1.WallId = wallcircle1.WallId;
+            seedCircle2.WallId = wallcircle2.WallId;
+
+            #endregion
+
+            #region Feeds
 
             var feedCollec = database.GetCollection<Feed>("Feeds");
             Feed userfeed1 = new Feed
@@ -209,6 +237,10 @@ namespace SocialNetwork
             feedCollec.InsertOne(userfeed4);
             feedCollec.InsertOne(userfeed5);
 
+            #endregion
+
+
+            #region Posts
 
             var postCollec = database.GetCollection<Post>("Posts");
             Post circlePost1 = new Post
@@ -223,6 +255,7 @@ namespace SocialNetwork
             wallcircle1.Posts.Add(circlePost1.PostId);
             userfeed1.Posts.Add(circlePost1.PostId);
             userfeed2.Posts.Add(circlePost1.PostId);
+
             Post circlePost2 = new Post
             {
                 Type = "Picture",
@@ -269,6 +302,11 @@ namespace SocialNetwork
             userfeed5.Posts.Add(userPost3.PostId);
             userfeed4.Posts.Add(userPost3.PostId);
 
+            #endregion
+
+
+            #region Comments
+
             var commentCollec = database.GetCollection<Comment>("Comments");
             Comment comment1 = new Comment
             {
@@ -298,6 +336,8 @@ namespace SocialNetwork
             };
             commentCollec.InsertOne(comment3);
             circlePost1.Comments.Add(comment2.CommentId);
+
+            #endregion
 
             var comfilter = Builders<Comment>.Filter.Eq(c => c.CommentId, comment1.CommentId);
             commentCollec.ReplaceOne(comfilter, comment1, new UpdateOptions { IsUpsert = true });
@@ -348,16 +388,11 @@ namespace SocialNetwork
             cfilter = Builders<Circle>.Filter.Eq(c => c.CircleId, seedCircle2.CircleId);
             circleCollec.ReplaceOne(cfilter, seedCircle2, new UpdateOptions { IsUpsert = true });
 
-            var ufilter = Builders<User>.Filter.Eq(u => u.UserId, seedUser1.UserId);
-            userCollec.ReplaceOne(ufilter, seedUser1, new UpdateOptions { IsUpsert = true });
-            ufilter = Builders<User>.Filter.Eq(u => u.UserId, seedUser2.UserId);
-            userCollec.ReplaceOne(ufilter, seedUser2, new UpdateOptions { IsUpsert = true });
-            ufilter = Builders<User>.Filter.Eq(u => u.UserId, seedUser3.UserId);
-            userCollec.ReplaceOne(ufilter, seedUser3, new UpdateOptions { IsUpsert = true });
-            ufilter = Builders<User>.Filter.Eq(u => u.UserId, seedUser4.UserId);
-            userCollec.ReplaceOne(ufilter, seedUser4, new UpdateOptions { IsUpsert = true });
-            ufilter = Builders<User>.Filter.Eq(u => u.UserId, seedUser5.UserId);
-            userCollec.ReplaceOne(ufilter, seedUser5, new UpdateOptions { IsUpsert = true });
+            userCollec.ReplaceOne(Builders<User>.Filter.Eq(u => u.UserId, seedUser1.UserId), seedUser1, new UpdateOptions { IsUpsert = true });
+            userCollec.ReplaceOne(Builders<User>.Filter.Eq(u => u.UserId, seedUser2.UserId), seedUser2, new UpdateOptions { IsUpsert = true });
+            userCollec.ReplaceOne(Builders<User>.Filter.Eq(u => u.UserId, seedUser3.UserId), seedUser3, new UpdateOptions { IsUpsert = true });
+            userCollec.ReplaceOne(Builders<User>.Filter.Eq(u => u.UserId, seedUser4.UserId), seedUser4, new UpdateOptions { IsUpsert = true });
+            userCollec.ReplaceOne(Builders<User>.Filter.Eq(u => u.UserId, seedUser5.UserId), seedUser5, new UpdateOptions { IsUpsert = true });
         }
     }
 }
